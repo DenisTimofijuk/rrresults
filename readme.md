@@ -34,6 +34,10 @@ This project fetches data from the following sources:
    ```sh
    npm run build
    ```
+5. Publish on GitHub Pages:
+   ```sh
+   npm run deploy
+   ```
 
 ## License
 This project is licensed under the MIT License.
