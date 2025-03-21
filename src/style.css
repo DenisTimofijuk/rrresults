@@ -38,3 +38,20 @@ div#alert-error-wrapper {
     flex-direction: row;
     justify-content: center;
 }
+
+div.points-radio-group{
+    display: flex;
+    flex-direction: row;
+}
+
+label.form-check-label{
+    cursor: pointer;
+    width: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+label.form-check-label > input{
+    cursor: pointer;
+}

@@ -1,4 +1,4 @@
-import { ResultData } from '../types/Rezults';
+import { ResultData } from '../types/Rezults.type';
 
 let currentColumn = 0;
 let isAnimating = false;

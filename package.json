@@ -8,10 +8,11 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "predeploy" : "npm run build",
-    "deploy" : "gh-pages -d dist"
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "devDependencies": {
+    "@faker-js/faker": "^9.6.0",
     "@types/bootstrap": "^5.2.10",
     "gh-pages": "^6.3.0",
     "sass": "1.77.6",

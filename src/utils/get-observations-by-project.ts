@@ -1,4 +1,4 @@
-import { FetchObservationsByProjectOptions, ObservationResponse } from "../types/ObservationResponse";
+import { FetchObservationsByProjectOptions, ObservationResponse } from "../types/ObservationResponse.type";
 
 /**
  * Fetches observations from iNaturalist API for a specific project

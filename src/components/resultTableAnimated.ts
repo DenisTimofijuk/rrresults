@@ -1,4 +1,4 @@
-import { ResultData } from '../types/Rezults';
+import { ResultData } from '../types/Rezults.type';
 
 export function initResultTable(tableData: ResultData) {
     const table = document.createElement('table');

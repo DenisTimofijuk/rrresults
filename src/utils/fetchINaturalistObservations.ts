@@ -1,4 +1,4 @@
-import { INaturalistResponse } from '../types/INaturalistObservationsResult';
+import { INaturalistResponse } from '../types/INaturalistObservationsResult.type';
 
 /**
  * Fetches observation data from iNaturalist API for a specific project

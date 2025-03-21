@@ -3,8 +3,8 @@ import { getJSONData } from './data/getData';
 import './scss/styles.scss';
 import './style.css';
 import './styles/loader.css';
-import { ResultData } from './types/Rezults';
-import { getRandomMessage } from './utils/errorMessage';
+import { ResultData } from './types/Rezults.type';
+import { displayAlert, hideAlert } from './utils/errorHandler';
 import { resetProgress, revealNextColumn } from './utils/revealNextColumn';
 // import * as bootstrap from 'bootstrap'
 
@@ -15,7 +15,6 @@ import { resetProgress, revealNextColumn } from './utils/revealNextColumn';
     const revealNext = document.getElementById('reveal-next') as HTMLButtonElement;
     const placeHolder = document.getElementById('results') as HTMLDivElement;
     const yearPlaceHolder = document.getElementById('year-place-holder') as HTMLSpanElement;
-    const alertErrorwrapper = document.getElementById('alert-error-wrapper') as HTMLDivElement;
 
     try {
         loader?.classList.remove('hide');
@@ -66,15 +65,6 @@ import { resetProgress, revealNextColumn } from './utils/revealNextColumn';
             displayAlert();
         }
     });
-
-    function displayAlert() {
-        loader?.classList.add('hide');
-        document.getElementById('error-text')!.innerText = getRandomMessage();
-        alertErrorwrapper.classList.remove('hide');
-    }
-    function hideAlert() {
-        alertErrorwrapper.classList.add('hide');
-    }
 
     // const results = await fetchINaturalistObservations();
     // console.log(results);

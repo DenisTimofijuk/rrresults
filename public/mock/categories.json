@@ -1,0 +1,66 @@
+[
+    {
+        "name": "Vėžegyviai ir dėlės.",
+        "id": 1
+    },
+    {
+        "name": "Žuvys",
+        "id": 2
+    },
+    {
+        "name": "Kitos rūšys",
+        "id": 3
+    },
+    {
+        "name": "Varliagyviai ir ropliai",
+        "id": 4
+    },
+    {
+        "name": "Laumžirgiai",
+        "id": 5
+    },
+    {
+        "name": "Žinduoliai",
+        "id": 6
+    },
+    {
+        "name": "Voragyviai",
+        "id": 7
+    },
+    {
+        "name": "Moliuskai",
+        "id": 8
+    },
+    {
+        "name": "Kerpės",
+        "id": 9
+    },
+    {
+        "name": "Grybai",
+        "id": 10
+    },
+    {
+        "name": "Samanos",
+        "id": 11
+    },
+    {
+        "name": "Drugiai",
+        "id": 12
+    },
+    {
+        "name": "Vabalai",
+        "id": 13
+    },
+    {
+        "name": "Kiti vabzdžiai",
+        "id": 14
+    },
+    {
+        "name": "Paukščiai",
+        "id": 15
+    },
+    {
+        "name": "Induočiai augalai",
+        "id": 16
+    }
+]
