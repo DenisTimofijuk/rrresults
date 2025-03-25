@@ -1,87 +1,80 @@
 import { getJSONData } from './data/getData';
-import { generateMockDataForExperts } from '../public/mock/generate-observations-test-data';
 import './scss/styles.scss';
 import './style.css';
 import './styles/loader.css';
-import { RequestCategoriesResult } from './types/categories.type';
 import { displayAlert } from './utils/errorHandler';
-import { fetchINaturalistObservations } from './utils/fetchINaturalistObservations';
-import { generateTableForExpert } from './components/generateTableForExpert';
-import { updateURLParameter } from './utils/URLParametersHandler';
+// import { fetchINaturalistObservations } from './utils/fetchINaturalistObservations';
+import { getURLParameter, updateURLParameter } from './utils/URLParametersHandler';
+import { getAvailableCategories } from './utils/getAvailableCategories';
+import { displayDataForExpert } from './utils/displayDataForExpert';
 
 // For now we ignore authentication problem and continue with scenario as users are authorised.
 
-(async ()=>{
+(async () => {
     const loader = document.getElementById('loader-wrapper');
     const getDataButton = document.getElementById('get-data') as HTMLButtonElement;
-    const yearSelected = document.getElementById('year-selected') as HTMLSelectElement;
-    const categorySelected = document.getElementById('category-selected') as HTMLSelectElement;
+    const yearSelect = document.getElementById('year-selected') as HTMLSelectElement;
+    const categorySelect = document.getElementById('category-selected') as HTMLSelectElement;
     const resultPlaceHolder = document.getElementById('results') as HTMLDivElement;
     const yearPlaceHolder = document.getElementById('year-place-holder') as HTMLSpanElement;
     const categoryPlaceHolder = document.getElementById('category-place-holder') as HTMLSpanElement;
-    const alertErrorwrapper = document.getElementById('alert-error-wrapper') as HTMLDivElement;
 
-    try{
-        loader?.classList.remove('hide');
+    loader?.classList.remove('hide');
+    try {
         const availableYears = await getJSONData<number[]>('./mock/years.json');
-        availableYears.forEach((value)=>{
+        availableYears.forEach((value) => {
             const option = document.createElement('option');
             option.value = value.toString();
             option.textContent = value.toString();
-            yearSelected.appendChild(option);
+            yearSelect.appendChild(option);
         });
-        loader?.classList.add('hide');
-    }catch(error){
+    } catch (error) {
         displayAlert();
+    }finally{
+        loader?.classList.add('hide');
     }
 
-    yearSelected.addEventListener('change', async ()=>{
-        const selectedYear = yearSelected.value;
-        if(!selectedYear) return;
+    yearSelect.addEventListener('change', async () => {
+        const selectedYear = yearSelect.value;
+        if (!selectedYear) return;
         yearPlaceHolder.textContent = selectedYear;
         categoryPlaceHolder.textContent = '';
-        try{
-            loader?.classList.remove('hide');
-            const availableCategories = await getJSONData<RequestCategoriesResult>(`./mock/categories.json?y=${selectedYear}`); //TODO: replace with actual restapi
-            categorySelected.innerHTML = '';
-            const defaultOption = document.createElement('option');
-            defaultOption.value = '';
-            defaultOption.textContent = '----';
-            categorySelected.appendChild(defaultOption);
-            categorySelected.value = '';
-            availableCategories.forEach((value)=>{
-                const option = document.createElement('option');
-                option.value = value.id.toString();
-                option.textContent = value.name;
-                categorySelected.appendChild(option);
-            });
-            loader?.classList.add('hide');
-        }catch(error){
-            displayAlert();
-        }
+        loader?.classList.remove('hide');
+        getAvailableCategories( loader, selectedYear, categorySelect);
     })
 
-    categorySelected.addEventListener('change', async ()=>{
-        categoryPlaceHolder.textContent = categorySelected.options[categorySelected.selectedIndex].text;
-        getDataButton.disabled = categorySelected.value === '';
+    categorySelect.addEventListener('change', async () => {
+        categoryPlaceHolder.textContent = categorySelect.options[categorySelect.selectedIndex].text;
+        getDataButton.disabled = categorySelect.value === '';
     })
 
-    getDataButton.addEventListener('click', async ()=>{
-        const selectedYear = yearSelected.value;
-        const selectedCategory = categorySelected.value;
-        if(!selectedYear || !selectedCategory) return;
-        try{
-            loader?.classList.remove('hide');
-            // const results = await getJSONData<any>(`./mock/results.json?y=${selectedYear}&c=${selectedCategory}`); //TODO: replace with actual restapi
-            const results = generateMockDataForExperts(); //TODO: replace with actual restapi
-            const currentTable = generateTableForExpert(results);
-            resultPlaceHolder.appendChild(currentTable);
-        }catch(error){
-            displayAlert();
-        }
+    getDataButton.addEventListener('click', async () => {
+        if (!yearSelect.value || !categorySelect.value) return;
+        
+        displayDataForExpert(loader, resultPlaceHolder, yearSelect.value, categorySelect.value);
         loader?.classList.add('hide');
 
-        updateURLParameter('year', selectedYear);
-        updateURLParameter('category', selectedCategory);
+        updateURLParameter('year', yearSelect.value);
+        updateURLParameter('category', categorySelect.value);
     })
-})()
+
+    // restore page state from URL parameters
+    const year = getURLParameter('year');
+    const category = getURLParameter('category');
+    if (year) {
+        yearSelect.value = year;
+        yearPlaceHolder.textContent = year;
+        await getAvailableCategories( loader, year, categorySelect);
+    }
+    if (category) {
+        categorySelect.value = category;
+        categoryPlaceHolder.textContent = categorySelect.options[categorySelect.selectedIndex].text;
+        getDataButton.disabled = categorySelect.value === '';
+    } 
+    if (year && category) {
+        getDataButton.disabled = false;
+        displayDataForExpert(loader, resultPlaceHolder, yearSelect.value, categorySelect.value);
+    } else {
+        getDataButton.disabled = true;
+    }
+})();

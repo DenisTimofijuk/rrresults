@@ -1,57 +1,5 @@
 import { ExperResultData } from "../types/ExpertTableData.type";
 
-
-// export function generateTableForExpert(tableData: ExperResultData[]) {
-//     const table = document.createElement('table');
-//     table.classList.add('table');
-//     table.classList.add('table-hover');
-//     table.classList.add('table-bordered');
-//     table.classList.add('table-sm');
-
-//     // Create table header
-//     const thead = document.createElement('thead');
-//     thead.classList.add('table-light');
-//     const headerRow = document.createElement('tr');
-//     const headers = [...Object.keys(tableData[0])];
-//     headers.forEach((text) => {
-//         const th = document.createElement('th');
-//         th.textContent = text;
-//         headerRow.appendChild(th);
-//     });
-//     thead.appendChild(headerRow);
-//     table.appendChild(thead);
-
-//     // Create table body
-//     const tbody = document.createElement('tbody');
-//     tableData.forEach((rowData) => {
-//         const row = document.createElement('tr');
-//         const data = rowData;
-
-//         // Process all properties except the URL property
-//         for (const [key, value] of Object.entries(data)) {
-//             const td = document.createElement('td');
-
-//             if (key === "observation-url" && value) {
-//                 // Create link for URL property
-//                 const link = document.createElement('a');
-//                 link.href = value.toString();
-//                 link.textContent = 'iNaturalist';
-//                 link.target = '_blank';
-//                 td.appendChild(link);
-//             } else {
-//                 td.textContent = value?.toString() || '';
-//             }
-
-//             row.appendChild(td);
-//         }
-
-//         tbody.appendChild(row);
-//     });
-
-//     table.appendChild(tbody);
-//     return table;
-// }
-
 export function generateTableForExpert(tableData: ExperResultData[]) {
     const table = document.createElement('table');
     table.classList.add('table', 'table-hover', 'table-bordered', 'table-sm');
