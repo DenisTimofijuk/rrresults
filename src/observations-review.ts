@@ -77,4 +77,19 @@ import { displayDataForExpert } from './utils/displayDataForExpert';
     } else {
         getDataButton.disabled = true;
     }
+
+    const onlyWithCommentsInput = document.getElementById('only-with-comments') as HTMLInputElement;
+    // on input clikc display rows only with existing comments
+    onlyWithCommentsInput.addEventListener('change', () => {
+        const table = resultPlaceHolder.querySelector('table');
+        if (table) {
+            const rows = table.querySelectorAll('tr');
+            rows.forEach(row => {
+                const comment = row.querySelector('textarea');
+                if (comment) {
+                    row.classList.toggle('hide', onlyWithCommentsInput.checked && comment.value === '');
+                }
+            });
+        }
+    });
 })();

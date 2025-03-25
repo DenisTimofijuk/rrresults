@@ -11,5 +11,7 @@ export async function displayDataForExpert(loader: HTMLElement | null, resultPla
         resultPlaceHolder.appendChild(currentTable);
     } catch (error) {
         displayAlert();
+    }finally{
+        loader?.classList.add('hide');
     }
 }

@@ -83,7 +83,7 @@ export function generateTableForExpert(tableData: ExperResultData[]) {
                     });
 
                     const radioLabel = document.createElement('label');
-                    radioLabel.classList.add('form-check-label');
+                    radioLabel.classList.add('form-check-label', 'hover-pointer');
                     radioLabel.htmlFor = `points-${rowIndex}-${option}`;
                     radioLabel.textContent = option.toString();
 
@@ -142,3 +142,5 @@ export function generateTableForExpert(tableData: ExperResultData[]) {
     table.appendChild(tbody);
     return table;
 }
+
+// TODO: ADD FILTER BUTTON TO HEADER

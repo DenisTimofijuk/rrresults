@@ -15,7 +15,6 @@
                 <li>Auto save on each row edit, indicate with animated row bg color temporary glow</li>
                 <li>Auto update if multiple experts would be working same time with same data?</li>
                 <li>implement Using keyboard shortcuts can drastically speed up data entry</li>
-                <li>implement filter: show only rows with comments</li>
             </ul>
         </div>
     </div>
@@ -38,6 +37,7 @@
             </button>
         </div>
         <hr />
+        <div><label class="hover-pointer">Rodyti eilutes tik su komentarais <input type="checkbox" id="only-with-comments"></label></div>
         <div id="results" class="table-responsive"></div>
         <div id="loader-wrapper" class="hide">
             <div class="loader">
@@ -79,9 +79,6 @@
                     administratorių.</div>
             </div>
         </div>
-        <button type="button" id="reveal-next" class="btn btn-outline-primary hide">
-            Rodyti sekantį stulpelį <span id="visible-column-progress"></span>
-        </button>
     </div>
     <script type="module" src="/src/observations-review.ts"></script>
 </body>
