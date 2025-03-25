@@ -5,20 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/svg+xml" href="/rrresults/vite.svg" />
-    <title>Admin Page</title>
-  <script type="module" crossorigin src="/rrresults/assets/admin-DqhrnOfU.js"></script>
-  <link rel="modulepreload" crossorigin href="/rrresults/assets/errorHandler-D8qLAtV7.js">
-  <link rel="stylesheet" crossorigin href="/rrresults/assets/errorHandler-DE1LavFv.css">
+    <title>Observations Review Page</title>
+  <script type="module" crossorigin src="/rrresults/assets/review-BW1jduJC.js"></script>
+  <link rel="modulepreload" crossorigin href="/rrresults/assets/errorHandler-JPHUPlNg.js">
+  <link rel="stylesheet" crossorigin href="/rrresults/assets/errorHandler-B6XgUE_Y.css">
 </head>
 
 <body>
     <div class="container-fluid">
-        <h1>Welcome to the Admin Page</h1>
         <div style="color: red;">TODO:
             <ul>
                 <li>Auto save on each row edit, indicate with animated row bg color temporary glow</li>
                 <li>Auto update if multiple experts would be working same time with same data?</li>
-                <li>save current location (year&category) by using url params, this would allow to share same location easelly, and page refresh would not be an issue</li>
+                <li>implement Using keyboard shortcuts can drastically speed up data entry</li>
             </ul>
         </div>
     </div>
@@ -41,6 +40,7 @@
             </button>
         </div>
         <hr />
+        <div><label class="hover-pointer">Rodyti eilutes tik su komentarais <input type="checkbox" id="only-with-comments"></label></div>
         <div id="results" class="table-responsive"></div>
         <div id="loader-wrapper" class="hide">
             <div class="loader">
@@ -82,9 +82,6 @@
                     administratorių.</div>
             </div>
         </div>
-        <button type="button" id="reveal-next" class="btn btn-outline-primary hide">
-            Rodyti sekantį stulpelį <span id="visible-column-progress"></span>
-        </button>
     </div>
 </body>
 
