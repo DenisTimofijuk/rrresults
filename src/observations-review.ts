@@ -1,4 +1,3 @@
-import { getJSONData } from './data/getData';
 import './scss/styles.scss';
 import './style.css';
 import './styles/loader.css';
@@ -7,8 +6,9 @@ import { displayAlert } from './utils/errorHandler';
 import { getURLParameter, updateURLParameter } from './utils/URLParametersHandler';
 import { getAvailableCategories } from './utils/getAvailableCategories';
 import { displayDataForExpert } from './utils/displayDataForExpert';
+import apiManager from './utils/apisManager';
 
-// For now we ignore authentication problem and continue with scenario as users are authorised.
+// For now, we will ignore the authentication problem and continue with the scenario as if the users were authorized.
 
 (async () => {
     const loader = document.getElementById('loader-wrapper');
@@ -21,7 +21,7 @@ import { displayDataForExpert } from './utils/displayDataForExpert';
 
     loader?.classList.remove('hide');
     try {
-        const availableYears = await getJSONData<number[]>('./mock/years.json');
+        const availableYears = await apiManager.getAvailableYears();
         availableYears.forEach((value) => {
             const option = document.createElement('option');
             option.value = value.toString();

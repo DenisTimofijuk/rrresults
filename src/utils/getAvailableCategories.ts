@@ -1,10 +1,9 @@
-import { getJSONData } from "../data/getData";
-import { RequestCategoriesResult } from "../types/categories.type";
+import apiManager from "./apisManager";
 import { displayAlert } from "./errorHandler";
 
 export async function getAvailableCategories( loader: HTMLElement | null, selectedYear: string, categorySelected: HTMLSelectElement) {
     try {
-        const availableCategories = await getJSONData<RequestCategoriesResult>(`./mock/categories.json?y=${selectedYear}`); //TODO: replace with actual restapi
+        const availableCategories = await apiManager.getAvailableCategories(selectedYear);
         categorySelected.innerHTML = '';
         const defaultOption = document.createElement('option');
         defaultOption.value = '';

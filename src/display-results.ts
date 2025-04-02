@@ -1,9 +1,9 @@
 import { initResultTable } from './components/resultTableAnimated';
-import { getJSONData } from './data/getData';
 import './scss/styles.scss';
 import './style.css';
 import './styles/loader.css';
 import { ResultData } from './types/Rezults.type';
+import apiManager from './utils/apisManager';
 import { displayAlert, hideAlert } from './utils/errorHandler';
 import { resetProgress, revealNextColumn } from './utils/revealNextColumn';
 // import * as bootstrap from 'bootstrap'
@@ -18,7 +18,7 @@ import { resetProgress, revealNextColumn } from './utils/revealNextColumn';
 
     try {
         loader?.classList.remove('hide');
-        const availableYears = await getJSONData<number[]>('./mock/years.json');
+        const availableYears = await apiManager.getAvailableYears();
         availableYears.forEach((value) => {
             const option = document.createElement('option');
             option.value = value.toString();
@@ -56,7 +56,7 @@ import { resetProgress, revealNextColumn } from './utils/revealNextColumn';
         try {
             loader?.classList.remove('hide');
             revealNext.classList.add('hide');
-            currentData = await getJSONData<ResultData>('./mock/results.json?y=2025');
+            currentData = await apiManager.getResultsByYear(selectedValue);
             currentTable = initResultTable(currentData);
             placeHolder.appendChild(currentTable);
             loader?.classList.add('hide');
