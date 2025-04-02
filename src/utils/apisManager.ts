@@ -1,4 +1,4 @@
-import MockReviewApiService from "../../public/mock/mock-api-service";
+import MockReviewApiService from "../data/mock/mock-api-service";
 import { getJSONData } from "../data/getData";
 import { RequestCategoriesResult } from "../types/categories.type";
 import { ExperResultData } from "../types/ExpertTableData.type";
