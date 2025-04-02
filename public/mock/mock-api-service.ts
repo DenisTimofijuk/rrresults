@@ -47,9 +47,9 @@ class MockReviewApiService {
      * Save a single row review
      * @param {number} rowId - Unique identifier for the row
      * @param {object} reviewData - Expert review data for this row
-     * @returns {Promise} - Promise resolving to response object or rejecting with error
+     * @returns {Promise<{ status: number; message: string; rowId: number; timestamp: string; }>} - Promise resolving to response object or rejecting with error
      */
-    saveRowReview(rowId: number, reviewData: object) {
+    saveRowReview(rowId: number, reviewData: object): Promise<{ status: number; message: string; rowId: number; timestamp: string; }> {
       return new Promise((resolve, reject) => {
         // Add timestamp to the review data
         const dataToSave = {

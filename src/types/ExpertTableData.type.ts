@@ -6,5 +6,5 @@ export type ExperResultData = {
     "observation-url": string;
     expert_review: string;
     points: number | string;
-    Nr: number;
+    id: number;
 }

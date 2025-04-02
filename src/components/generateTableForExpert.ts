@@ -32,6 +32,7 @@ export function generateTableForExpert(tableData: ExperResultData[]) {
     const tbody = document.createElement('tbody');
     tableData.forEach((rowData, rowIndex) => {
         const row = document.createElement('tr');
+        row.dataset['observationId'] = rowData['id'].toString() || '';
 
         // Process columns in the defined order
         columnOrder.forEach((key) => {
@@ -51,22 +52,11 @@ export function generateTableForExpert(tableData: ExperResultData[]) {
                 const radioContainer = document.createElement('div');
                 radioContainer.classList.add('points-radio-group');
 
-                // Create hidden input to store the actual value
-                const hiddenInput = document.createElement('input');
-                hiddenInput.type = 'hidden';
-                hiddenInput.name = 'points';
-                hiddenInput.value = value?.toString() || '0';
-                hiddenInput.dataset.rowIndex = rowIndex.toString();
-                radioContainer.appendChild(hiddenInput);
-
                 // Define the possible values
                 const options = [0, 0.5, 1];
 
                 // Create radio buttons for each option
                 options.forEach(option => {
-                    // const radioDiv = document.createElement('div');
-                    // radioDiv.classList.add('form-check', 'form-check-inline');
-
                     const radioInput = document.createElement('input');
                     radioInput.type = 'radio';
                     radioInput.classList.add('form-check-input');
@@ -75,20 +65,12 @@ export function generateTableForExpert(tableData: ExperResultData[]) {
                     radioInput.value = option.toString();
                     radioInput.checked = parseFloat(value.toString()) === option;
 
-                    radioInput.addEventListener('change', () => {
-                        // Update the hidden input when radio selection changes
-                        hiddenInput.value = option.toString();
-                        // Update rowData
-                        rowData.points = option;
-                    });
-
                     const radioLabel = document.createElement('label');
                     radioLabel.classList.add('form-check-label', 'hover-pointer');
                     radioLabel.htmlFor = `points-${rowIndex}-${option}`;
                     radioLabel.textContent = option.toString();
 
                     radioLabel.appendChild(radioInput);
-                    // radioDiv.appendChild(radioLabel);
                     radioContainer.appendChild(radioLabel);
                 });
 
@@ -142,5 +124,3 @@ export function generateTableForExpert(tableData: ExperResultData[]) {
     table.appendChild(tbody);
     return table;
 }
-
-// TODO: ADD FILTER BUTTON TO HEADER
