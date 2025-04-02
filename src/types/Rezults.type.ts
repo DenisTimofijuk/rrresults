@@ -1,4 +1,4 @@
-type DataRow = {
+export type DataRow = {
     teamName: string;
     data: {
         title: string;
