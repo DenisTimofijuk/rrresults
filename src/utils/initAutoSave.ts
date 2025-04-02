@@ -12,7 +12,15 @@ export function initAutoSave(table: HTMLTableElement) {
         if (currentRowId !== observationId) {
             // User moved to a new row, save any pending data for previous row
             if (currentRowId && pendingSaves[currentRowId]) {
-                saveReviewData(currentRowId, pendingSaves[currentRowId]);
+                const previousRow = Array.from(rows).find(r =>
+                    (r as HTMLElement).dataset['observationId'] === currentRowId
+                ) as HTMLTableRowElement;
+
+                saveReviewData(currentRowId, pendingSaves[currentRowId], (isDataSaved) => {
+                    if (previousRow) {  // Make sure we have reference to the previous row
+                        handleRowAnimation({ row: previousRow, isDataSaved });
+                    }
+                });
                 delete pendingSaves[currentRowId];
                 //handle remaining timers
                 if (saveTimers[currentRowId]) {
@@ -29,7 +37,7 @@ export function initAutoSave(table: HTMLTableElement) {
         const pointInputs = row.querySelectorAll('input[type="radio"]');
         const commentInput = row.querySelector('textarea') as HTMLTextAreaElement;
         const observationId = (row as HTMLElement).dataset['observationId'];
-        
+
         if (!observationId) {
             console.error('Observation ID not found for row:', row);
             return;
@@ -49,17 +57,19 @@ export function initAutoSave(table: HTMLTableElement) {
             if (saveTimers[observationId]) {
                 window.clearTimeout(saveTimers[observationId]);
             }
-            
+
             // Update pending data
             pendingSaves[observationId] = {
                 ...pendingSaves[observationId],
                 ...data
             };
-            
+
             // Set new timer
             saveTimers[observationId] = window.setTimeout(() => {
                 if (Object.keys(pendingSaves[observationId]).length > 0) {
-                    saveReviewData(observationId, pendingSaves[observationId]);
+                    saveReviewData(observationId, pendingSaves[observationId], (isDataSaved) => {
+                        handleRowAnimation({ row: row as HTMLTableRowElement, isDataSaved });
+                    });
                     pendingSaves[observationId] = {};
                 }
             }, debounceDelay);
@@ -68,6 +78,8 @@ export function initAutoSave(table: HTMLTableElement) {
         // Set up radio button change handlers
         pointInputs.forEach((input) => {
             input.addEventListener('change', () => {
+                row.classList.remove('table-danger');
+                row.classList.remove('table-success');
                 debouncedSave({
                     points: parseFloat((input as HTMLInputElement).value)
                 });
@@ -80,12 +92,16 @@ export function initAutoSave(table: HTMLTableElement) {
             if (pendingSaves[observationId]?.comments !== undefined) {
                 saveReviewData(observationId, {
                     comments: commentInput.value
+                }, (isDataSaved) => {
+                    handleRowAnimation({ row: row as HTMLTableRowElement, isDataSaved });
                 });
                 delete pendingSaves[observationId].comments;
             }
         });
-        
+
         commentInput.addEventListener('input', () => {
+            row.classList.remove('table-danger');
+            row.classList.remove('table-success');
             debouncedSave({
                 comments: commentInput.value
             });
@@ -114,21 +130,32 @@ export function initAutoSave(table: HTMLTableElement) {
     });
 }
 
-async function saveReviewData(rowId: string, data: { points?: number, comments?: string }) {
+async function saveReviewData(rowId: string, data: { points?: number, comments?: string }, callback: (isDataSaved: boolean) => void = () => { }) {
     if (data.points === undefined && data.comments === undefined) return;
     if (!rowId) return;
 
     // fetch api and handle response animations
     try {
-        const response = await apiManager.saveExpertReview(parseInt(rowId), data)    
-        console.log('Response:', response);
-        if(response.status === 200){        
-            // Handle success animation here
-            console.log('Save successful:', response);
-        }else{
-            console.error('Save failed:', response);
-        }
+        const response = await apiManager.saveExpertReview(parseInt(rowId), data)
+        callback(response.status === 200);
     } catch (error) {
         console.error('Error saving review data:', error);
+        callback(false);
+    }
+}
+
+interface RowAnimationParams {
+    row: HTMLTableRowElement;
+    isDataSaved: boolean;
+}
+
+function handleRowAnimation(params: RowAnimationParams) {
+    const { row, isDataSaved } = params;
+    if (isDataSaved) {
+        row.classList.remove('table-danger');
+        row.classList.add('table-success');
+    } else {
+        row.classList.remove('table-success');
+        row.classList.add('table-danger');
     }
 }
