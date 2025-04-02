@@ -39,7 +39,7 @@ export function generateTableForExpert(tableData: ExperResultData[]) {
             const td = document.createElement('td');
             const value = rowData[key as keyof ExperResultData];
 
-            if (key === "observation-url" && value) {
+            if (key === "url" && value) {
                 // Create link for URL property
                 const link = document.createElement('a');
                 link.href = value.toString();

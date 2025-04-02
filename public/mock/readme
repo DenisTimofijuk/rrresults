@@ -1,4 +1,9 @@
 categories.json should be depended on selected year.
 observations.json should be selected result filterd by year and category
 
+Deprecated:
 "observation-url": `https://www.inaturalist.org/observations/${observation.id}`
+
+
+We need to group observations per taxon id and have link to that group:
+url:  `https://www.inaturalist.org/observations?project_id=231282&taxon_id=1098280&place_id=any&verifiable=any`

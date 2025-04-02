@@ -20,20 +20,18 @@ function generateExpertReview() {
 function generateObservation() {
     const category = getRandomItem(categories);
     return {
-        time_observed_at: "2025-02-21 12:54:27",
         name: faker.science.chemicalElement().name,
         preferred_common_name: getRandomItem(commonNames[category as keyof typeof commonNames]),
         points: "",
         expert_review: generateExpertReview(),
-        team: "Laukinės meškos",
-        user:  "Medinė Kaladėlė",
-        "observation-url": "https://www.inaturalist.org/observations/262499243"
+        total_observations: 6,
+        url: "https://www.inaturalist.org/observations?project_id=231282&taxon_id=1098280&place_id=any&verifiable=any"
     };
 }
 
 export function generateMockDataForExperts() {
     return Array.from({ length: 1000 }, (_, index) => ({
-        Nr: index + 1,
+        id: index + 1,
         ...generateObservation()        
     }));
 }
