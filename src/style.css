@@ -47,8 +47,9 @@ div.points-radio-group{
 label.form-check-label{
     width: 50px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
+    justify-content: center;
 }
 
 .hover-pointer{
@@ -57,4 +58,8 @@ label.form-check-label{
 
 .hover-pointer input{
     cursor: pointer;
+}
+
+table.table tr {
+    vertical-align: middle;
 }

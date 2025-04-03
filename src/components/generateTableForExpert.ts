@@ -79,7 +79,7 @@ export function generateTableForExpert(tableData: ExperResultData[]) {
             else if( key === "expert_review") {
                 const reviewInput = document.createElement('textarea');
                 reviewInput.value = value?.toString() || '';
-                reviewInput.rows = 2;
+                reviewInput.rows = 1;
                 reviewInput.cols = 50;
                 td.appendChild(reviewInput);
             }
