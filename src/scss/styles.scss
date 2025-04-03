@@ -1,3 +1,17 @@
 // Import all of Bootstrap's CSS
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap/scss/variables';
+
+:root {
+    --bd-violet-bg: #6f42c1; // Example violet color
+}
+
+.custom-tooltip {
+    --bs-tooltip-bg: var(--bd-violet-bg);
+    --bs-tooltip-color: var(--bs-white);
+    --bs-tooltip-max-width: 500px;
+    
+    .tooltip-inner {
+        text-align: left;
+    }
+}

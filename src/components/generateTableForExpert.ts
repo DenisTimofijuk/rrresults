@@ -1,4 +1,5 @@
-import { ExperResultData } from "../types/ExpertTableData.type";
+import { Tooltip } from 'bootstrap'
+import { ExperResultData, ObservationAuthor } from "../types/ExpertTableData.type";
 
 export function generateTableForExpert(tableData: ExperResultData[]) {
     const table = document.createElement('table');
@@ -76,47 +77,37 @@ export function generateTableForExpert(tableData: ExperResultData[]) {
 
                 td.appendChild(radioContainer);
             }
-            else if( key === "expert_review") {
+            else if (key === "expert_review") {
                 const reviewInput = document.createElement('textarea');
                 reviewInput.value = value?.toString() || '';
                 reviewInput.rows = 1;
                 reviewInput.cols = 50;
                 td.appendChild(reviewInput);
             }
-            else {
+            else if (key === "total_observations") {
+                const observationsList = document.createElement('ol');
+                (value as ObservationAuthor[]).forEach((observation) => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = `${observation.team_name} - ${observation.user_name}`;
+                    observationsList.appendChild(listItem);
+                });
+                // Create tooltip for the list
+                const tooltipElement = document.createElement('span');
+                tooltipElement.classList.add('tooltip-text', 'hover-pointer');
+                tooltipElement.dataset.bsToggle = 'tooltip';
+                tooltipElement.dataset.bsCustomClass = 'custom-tooltip';
+                tooltipElement.dataset.bsHtml = 'true';
+                tooltipElement.dataset.bsTitle = `<ol>${observationsList.innerHTML}</ol>`;
+                tooltipElement.textContent = `${(value as ObservationAuthor[]).length} observations`;
+                td.appendChild(tooltipElement);
+                // Initialize Bootstrap tooltips
+                new Tooltip(tooltipElement);
+            } else {
                 td.textContent = value?.toString() || '';
             }
 
             row.appendChild(td);
         });
-
-        // Add action buttons if needed
-        if (rowData.hasOwnProperty('actions')) {
-            const actionsTd = document.createElement('td');
-
-            // Example of adding an edit button
-            const editButton = document.createElement('button');
-            editButton.textContent = 'Edit';
-            editButton.classList.add('btn', 'btn-sm', 'btn-primary', 'me-1');
-            editButton.addEventListener('click', () => {
-                // Handle edit action
-                console.log('Edit row:', rowIndex);
-            });
-            actionsTd.appendChild(editButton);
-
-            // Example of adding a delete button
-            const deleteButton = document.createElement('button');
-            deleteButton.textContent = 'Delete';
-            deleteButton.classList.add('btn', 'btn-sm', 'btn-danger');
-            deleteButton.addEventListener('click', () => {
-                // Handle delete action
-                console.log('Delete row:', rowIndex);
-                row.remove();
-            });
-            actionsTd.appendChild(deleteButton);
-
-            row.appendChild(actionsTd);
-        }
 
         tbody.appendChild(row);
     });

@@ -63,3 +63,7 @@ label.form-check-label{
 table.table tr {
     vertical-align: middle;
 }
+
+span.tooltip-text{
+    text-decoration: underline;
+}

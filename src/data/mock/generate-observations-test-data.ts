@@ -22,15 +22,32 @@ function generateObservation() {
     return {
         name: faker.science.chemicalElement().name,
         preferred_common_name: getRandomItem(commonNames[category as keyof typeof commonNames]),
-        points: "",
+        points: 1,
         expert_review: generateExpertReview(),
-        total_observations: 6,
+        total_observations: [
+            {
+                team_name: faker.company.name(),
+                user_name: faker.person.fullName(),
+            },
+            {
+                team_name: faker.company.name(),
+                user_name: faker.person.fullName(),
+            },
+            {
+                team_name: faker.company.name(),
+                user_name: faker.person.fullName(),
+            },
+            {
+                team_name: faker.company.name(),
+                user_name: faker.person.fullName(),
+            }
+        ],
         url: "https://www.inaturalist.org/observations?project_id=231282&taxon_id=1098280&place_id=any&verifiable=any"
     };
 }
 
 export function generateMockDataForExperts() {
-    return Array.from({ length: 1000 }, (_, index) => ({
+    return Array.from({ length: 500 }, (_, index) => ({
         id: index + 1,
         ...generateObservation()        
     }));
