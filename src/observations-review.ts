@@ -2,7 +2,6 @@ import './scss/styles.scss';
 import './style.css';
 import './styles/loader.css';
 import { displayAlert } from './utils/errorHandler';
-// import { fetchINaturalistObservations } from './utils/fetchINaturalistObservations';
 import { getURLParameter, updateURLParameter } from './utils/URLParametersHandler';
 import { getAvailableCategories } from './utils/getAvailableCategories';
 import { displayDataForExpert } from './utils/displayDataForExpert';
@@ -19,9 +18,9 @@ import apiManager from './utils/apisManager';
     const yearPlaceHolder = document.getElementById('year-place-holder') as HTMLSpanElement;
     const categoryPlaceHolder = document.getElementById('category-place-holder') as HTMLSpanElement;
 
-    let selectedYear = yearSelect.value;
-    let selectedCategory = categorySelect.value;
-
+    let selectedYear = getURLParameter('year');
+    let selectedCategory = getURLParameter('category');
+    
     loader?.classList.remove('hide');
     try {
         const availableYears = await apiManager.getAvailableYears();
@@ -45,7 +44,7 @@ import apiManager from './utils/apisManager';
         getDataButton.disabled = categorySelect.value === '';
     })
 
-    categorySelect.addEventListener('change', async () => {
+    categorySelect.addEventListener('change', () => {
         selectedCategory = categorySelect.value;
         getDataButton.disabled = categorySelect.value === '';
     })
@@ -53,30 +52,26 @@ import apiManager from './utils/apisManager';
     getDataButton.addEventListener('click', async () => {
         if (!yearSelect.value || !categorySelect.value) return;
         yearPlaceHolder.textContent = selectedYear;
-
         categoryPlaceHolder.textContent = categorySelect.options[categorySelect.selectedIndex].text;
+
         resetContentView();
-        displayDataForExpert(loader, resultPlaceHolder, yearSelect.value, categorySelect.value);
+        await displayDataForExpert(loader, resultPlaceHolder, yearSelect.value, categorySelect.value);
 
         updateURLParameter('year', yearSelect.value);
         updateURLParameter('category', categorySelect.value);
     })
 
     // restore page state from URL parameters
-    const year = getURLParameter('year');
-    const category = getURLParameter('category');
-    if (year) {
-        selectedYear = year;
-        yearSelect.value = year;
-        yearPlaceHolder.textContent = year;
-        await getAvailableCategories( loader, year, categorySelect);
+    if (selectedYear) {
+        yearSelect.value = selectedYear;
+        yearPlaceHolder.textContent = selectedYear;
+        await getAvailableCategories( loader, selectedYear, categorySelect);
     }
-    if (category) {
-        selectedCategory = category;
-        categorySelect.value = category;
+    if (selectedCategory) {
+        categorySelect.value = selectedCategory;
         categoryPlaceHolder.textContent = categorySelect.options[categorySelect.selectedIndex].text;
     } 
-    if (year && category) {
+    if (selectedYear && selectedCategory) {
         getDataButton.disabled = false;
         displayDataForExpert(loader, resultPlaceHolder, yearSelect.value, categorySelect.value);
     } else {
