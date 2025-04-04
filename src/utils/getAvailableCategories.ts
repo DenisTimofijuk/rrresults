@@ -1,20 +1,20 @@
 import apiManager from "./apisManager";
 import { displayAlert } from "./errorHandler";
 
-export async function getAvailableCategories( loader: HTMLElement | null, selectedYear: string, categorySelected: HTMLSelectElement) {
+export async function getAvailableCategories( loader: HTMLElement | null, selectedYear: string, categorySelect: HTMLSelectElement) {
     try {
         const availableCategories = await apiManager.getAvailableCategories(selectedYear);
-        categorySelected.innerHTML = '';
+        categorySelect.innerHTML = '';
         const defaultOption = document.createElement('option');
         defaultOption.value = '';
         defaultOption.textContent = '----';
-        categorySelected.appendChild(defaultOption);
-        categorySelected.value = '';
+        categorySelect.appendChild(defaultOption);
+        categorySelect.value = '';
         availableCategories.forEach((value) => {
             const option = document.createElement('option');
             option.value = value.id.toString();
             option.textContent = value.name;
-            categorySelected.appendChild(option);
+            categorySelect.appendChild(option);
         });
     } catch (error) {
         displayAlert();

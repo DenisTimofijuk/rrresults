@@ -19,6 +19,9 @@ import apiManager from './utils/apisManager';
     const yearPlaceHolder = document.getElementById('year-place-holder') as HTMLSpanElement;
     const categoryPlaceHolder = document.getElementById('category-place-holder') as HTMLSpanElement;
 
+    let selectedYear = yearSelect.value;
+    let selectedCategory = categorySelect.value;
+
     loader?.classList.remove('hide');
     try {
         const availableYears = await apiManager.getAvailableYears();
@@ -35,24 +38,25 @@ import apiManager from './utils/apisManager';
     }
 
     yearSelect.addEventListener('change', async () => {
-        const selectedYear = yearSelect.value;
+        selectedYear = yearSelect.value;
         if (!selectedYear) return;
-        yearPlaceHolder.textContent = selectedYear;
-        categoryPlaceHolder.textContent = '';
         loader?.classList.remove('hide');
-        getAvailableCategories( loader, selectedYear, categorySelect);
+        await getAvailableCategories( loader, selectedYear, categorySelect);
+        getDataButton.disabled = categorySelect.value === '';
     })
 
     categorySelect.addEventListener('change', async () => {
-        categoryPlaceHolder.textContent = categorySelect.options[categorySelect.selectedIndex].text;
+        selectedCategory = categorySelect.value;
         getDataButton.disabled = categorySelect.value === '';
     })
 
     getDataButton.addEventListener('click', async () => {
         if (!yearSelect.value || !categorySelect.value) return;
-        
+        yearPlaceHolder.textContent = selectedYear;
+
+        categoryPlaceHolder.textContent = categorySelect.options[categorySelect.selectedIndex].text;
+        resetContentView();
         displayDataForExpert(loader, resultPlaceHolder, yearSelect.value, categorySelect.value);
-        loader?.classList.add('hide');
 
         updateURLParameter('year', yearSelect.value);
         updateURLParameter('category', categorySelect.value);
@@ -62,14 +66,15 @@ import apiManager from './utils/apisManager';
     const year = getURLParameter('year');
     const category = getURLParameter('category');
     if (year) {
+        selectedYear = year;
         yearSelect.value = year;
         yearPlaceHolder.textContent = year;
         await getAvailableCategories( loader, year, categorySelect);
     }
     if (category) {
+        selectedCategory = category;
         categorySelect.value = category;
         categoryPlaceHolder.textContent = categorySelect.options[categorySelect.selectedIndex].text;
-        getDataButton.disabled = categorySelect.value === '';
     } 
     if (year && category) {
         getDataButton.disabled = false;
@@ -79,7 +84,6 @@ import apiManager from './utils/apisManager';
     }
 
     const onlyWithCommentsInput = document.getElementById('only-with-comments') as HTMLInputElement;
-    // on input clikc display rows only with existing comments
     onlyWithCommentsInput.addEventListener('change', () => {
         const table = resultPlaceHolder.querySelector('table');
         if (table) {
@@ -92,4 +96,9 @@ import apiManager from './utils/apisManager';
             });
         }
     });
+
+    function resetContentView() {
+        resultPlaceHolder.innerHTML = '';
+        onlyWithCommentsInput.checked = false;
+    }
 })();
