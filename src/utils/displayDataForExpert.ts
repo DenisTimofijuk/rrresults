@@ -11,7 +11,6 @@ export async function displayDataForExpert(loader: HTMLElement | null, resultPla
         const table = generateTableForExpert(dataManager);
         resultPlaceHolder.appendChild(table);
 
-        // set validation points for corresponding observations table
         const expertReviewContainer = document.querySelectorAll('div.expert-review-container');
         expertReviewContainer.forEach((container) => {
             const parentRow = container.closest('tr');
@@ -21,7 +20,7 @@ export async function displayDataForExpert(loader: HTMLElement | null, resultPla
             textarea?.addEventListener('change', (event) => {
                 const target = event.target as HTMLTextAreaElement;
                 const value = target.value;
-                if(!taxon_id) return;
+                if (!taxon_id) return;
                 dataManager.setComment(taxon_id, value);
             });
 
@@ -30,7 +29,7 @@ export async function displayDataForExpert(loader: HTMLElement | null, resultPla
             radioButtons?.forEach((radioButton) => {
                 radioButton.addEventListener('change', (event) => {
                     const selectedValue = (event.target as HTMLInputElement).value;
-                    if(!taxon_id) return;
+                    if (!taxon_id) return;
                     dataManager.setGroupPoints(taxon_id, Number(selectedValue));
                     const observationTable = document.querySelector(`table.observation-table[data-taxon-id="${taxon_id}"]`);
                     if (!observationTable) return;
@@ -48,10 +47,6 @@ export async function displayDataForExpert(loader: HTMLElement | null, resultPla
                 });
             });
         });
-
-        // listen changes for radio inputs form-check-input.btn-check on table.observation-table
-        // update dataManager with the selected value
-        // set validation points for corresponding expert-review-container 
     } catch (error) {
         displayAlert();
     } finally {

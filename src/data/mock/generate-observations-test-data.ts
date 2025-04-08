@@ -68,7 +68,7 @@ function generateObservation(index: number): ExperResultData {
         preferred_common_name: getRandomItem(commonNames[category as keyof typeof commonNames]),
         expert_review: "",
         observations: Array.from({ length: totalObservations }, (_, i) => ({
-            id: `${taxon_id}-${i}`,
+            id: Number(`${taxon_id}${i}`),
             points: 1,
             team_name: getRandomItem(teamNames),
             user_name: faker.person.fullName(),

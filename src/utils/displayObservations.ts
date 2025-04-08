@@ -1,6 +1,7 @@
 import { Collapse } from "bootstrap";
 import { createTableForObservations } from "../components/observationTable";
 import ExpertManager from "./ExpertManager";
+import { initObservationChangeEvent } from "./initObservationChangeEvent";
 
 export function generateSectionForObservations(taxon_id: number, dataManager: ExpertManager, referenceButton: HTMLButtonElement) {
     const newRowForObservations = document.createElement('tr');
@@ -31,6 +32,8 @@ export function generateSectionForObservations(taxon_id: number, dataManager: Ex
                     dataManager.setObservationPoints(taxon_id, Number(newRowForObservations.dataset['observationId']), Number(selectedValue));
                 });
             });
+
+            initObservationChangeEvent(dataManager, observationsTable);
         }
     });
 
