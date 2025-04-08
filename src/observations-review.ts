@@ -1,11 +1,13 @@
 import './scss/styles.scss';
 import './style.css';
 import './styles/loader.css';
+import './styles/collapse.css';
 import { displayAlert } from './utils/errorHandler';
 import { getURLParameter, updateURLParameter } from './utils/URLParametersHandler';
 import { getAvailableCategories } from './utils/getAvailableCategories';
 import { displayDataForExpert } from './utils/displayDataForExpert';
 import apiManager from './utils/apisManager';
+import { generateMockDataForExperts } from './data/mock/generate-observations-test-data';
 
 // For now, we will ignore the authentication problem and continue with the scenario as if the users were authorized.
 
@@ -96,4 +98,6 @@ import apiManager from './utils/apisManager';
         resultPlaceHolder.innerHTML = '';
         onlyWithCommentsInput.checked = false;
     }
+
+    // console.log(generateMockDataForExperts());
 })();

@@ -1,0 +1,14 @@
+.collapse-button::after {
+    content: " ▼";
+    font-size: 0.8em;
+    transition: transform 0.3s ease;
+    display: inline-block;
+}
+
+.collapse-button.active::after {
+    transform: rotate(180deg);
+}
+
+.collapse-button{
+    margin-right: 5px;;
+}

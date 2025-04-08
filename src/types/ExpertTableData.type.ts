@@ -1,14 +1,15 @@
-export type ObservationAuthor = {
+export type ObservationData = {
+    id: string;
+    points: number;
     team_name: string;
     user_name: string;
+    url: string;
 }
 
 export type ExperResultData = {
-    id: number;
+    taxon_id: number;
     name: string;
     preferred_common_name: string;
     expert_review: string;
-    points: number;
-    total_observations: ObservationAuthor[];
-    url: string;
+    observations: ObservationData[]
 }
