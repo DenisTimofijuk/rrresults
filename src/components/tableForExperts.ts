@@ -2,6 +2,7 @@ import { Collapse } from 'bootstrap'
 import { ExperResultData, ObservationData } from "../types/ExpertTableData.type";
 import { createTableForObservations } from './observationTable';
 import { createButtonForCollapse } from './expandButton';
+import { createValidationComponent } from './validationComponent';
 
 export function generateTableForExpert(tableData: ExperResultData[]) {
     const table = document.createElement('table');
@@ -73,11 +74,23 @@ export function generateTableForExpert(tableData: ExperResultData[]) {
                 observationCount.textContent = `Iš viso: (${(value as ObservationData[]).length})`;
                 td.appendChild(observationCount);
             } else if (key === "expert_review") {
+                const container = document.createElement('div');
+                container.classList.add('expert-review-container');
+
+                
+                const pointsContainer = document.createElement('div');
+                pointsContainer.classList.add('points-container');
+                const vComponent = createValidationComponent([0, 0.5, 1, '-Mixed'], rowData['taxon_id'].toString(), 1, 'btn-outline-primary'); //TODO: check if these observatiosn all has same value. if not - set 4th option (mixed)
+                pointsContainer.appendChild(vComponent);
+                container.appendChild(pointsContainer);
+
                 const reviewInput = document.createElement('textarea');
                 reviewInput.value = value?.toString() || '';
                 reviewInput.rows = 1;
                 reviewInput.cols = 50;
-                td.appendChild(reviewInput);
+                container.appendChild(reviewInput);
+
+                td.appendChild(container);
             } else {
                 td.textContent = value?.toString() || '';
             }
