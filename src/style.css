@@ -65,3 +65,14 @@ div.expert-review-container {
     flex-direction: row;
     justify-content: space-around;
 }
+
+div.pannel-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+div.pannel-wrapper div {
+    margin-right: 10px;
+}
