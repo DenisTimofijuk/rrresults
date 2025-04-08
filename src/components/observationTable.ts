@@ -29,6 +29,7 @@ export function createTableForObservations(data: ObservationData[], observationC
             const value = observation[observationKey as keyof ObservationData];
             const observationValue = (observation as any)[observationKey as keyof ObservationData];
             const td = document.createElement('td');
+
             if (observationKey === "url" && data) {
                 const link = document.createElement('a');
                 link.href = value as string;
@@ -36,10 +37,9 @@ export function createTableForObservations(data: ObservationData[], observationC
                 link.target = '_blank';
                 td.appendChild(link);
             } else if (observationKey === "points") {
-                const radioContainer = createValidationComponent([0, 0.5, 1], observation['id'], observationValue as number);
+                const radioContainer = createValidationComponent([0, 0.5, 1], observation['id'].toString(), observationValue as number);
                 td.appendChild(radioContainer);
-            }
-            else {
+            } else {
                 td.textContent = observationValue?.toString() || '';
             }
 

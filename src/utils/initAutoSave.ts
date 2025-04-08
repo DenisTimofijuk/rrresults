@@ -1,5 +1,7 @@
 import apiManager from "./apisManager";
 
+// @deprecated
+// This function is deprecated and will be removed in future versions. Use Manager isntead
 export function initAutoSave(table: HTMLTableElement) {
     const rows = table.querySelectorAll('tbody tr');
     const debounceDelay = 1500; // 1 second delay

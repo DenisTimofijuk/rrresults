@@ -1,5 +1,5 @@
 export type ObservationData = {
-    id: string;
+    id: number;
     points: number;
     team_name: string;
     user_name: string;

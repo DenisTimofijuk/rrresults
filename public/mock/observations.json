@@ -7,28 +7,28 @@
         "observations": [
             {
                 "id": "1000000-0",
-                "points": 1,
+                "points": 0,
                 "team_name": "LED",
                 "user_name": "Claire Rau",
                 "url": "https://www.inaturalist.org/observations/262499243"
             },
             {
                 "id": "1000000-1",
-                "points": 1,
+                "points": 0,
                 "team_name": "Hienos",
                 "user_name": "Bessie Langworth",
                 "url": "https://www.inaturalist.org/observations/262499243"
             },
             {
                 "id": "1000000-2",
-                "points": 1,
+                "points": 0.5,
                 "team_name": "Dream team",
                 "user_name": "Angelo Schinner",
                 "url": "https://www.inaturalist.org/observations/262499243"
             },
             {
                 "id": "1000000-3",
-                "points": 1,
+                "points": 0.5,
                 "team_name": "Hayabusa",
                 "user_name": "Gayle Casper",
                 "url": "https://www.inaturalist.org/observations/262499243"
