@@ -3,7 +3,7 @@ import { createValidationComponent } from "./validationComponent";
 
 export function createTableForObservations(data: ObservationData[], observationColumnOreder: string[]) {
     const table = document.createElement('table');
-    table.classList.add('table', 'table-hover', 'table-bordered', 'table-sm');
+    table.classList.add('table', 'table-hover', 'table-borderless', 'table-sm', 'observation-table');
     const thead = document.createElement('thead');
     thead.classList.add('table-light');
     const headerRow = document.createElement('tr');
@@ -30,14 +30,12 @@ export function createTableForObservations(data: ObservationData[], observationC
             const observationValue = (observation as any)[observationKey as keyof ObservationData];
             const td = document.createElement('td');
             if (observationKey === "url" && data) {
-                // Create link for URL property
                 const link = document.createElement('a');
                 link.href = value as string;
                 link.textContent = 'iNaturalist';
                 link.target = '_blank';
                 td.appendChild(link);
             } else if (observationKey === "points") {
-                // Create a container for the radio buttons
                 const radioContainer = createValidationComponent([0, 0.5, 1], observation['id'], observationValue as number);
                 td.appendChild(radioContainer);
             }

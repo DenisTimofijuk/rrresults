@@ -82,7 +82,7 @@ import { generateMockDataForExperts } from './data/mock/generate-observations-te
 
     const onlyWithCommentsInput = document.getElementById('only-with-comments') as HTMLInputElement;
     onlyWithCommentsInput.addEventListener('change', () => {
-        const table = resultPlaceHolder.querySelector('table');
+        const table = resultPlaceHolder.querySelector('table#expert-table');
         if (table) {
             const rows = table.querySelectorAll('tr');
             rows.forEach(row => {

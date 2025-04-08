@@ -12,3 +12,8 @@
 .collapse-button{
     margin-right: 5px;;
 }
+
+.observation-table{
+    max-width: 95vw;
+    margin-left: auto;
+}

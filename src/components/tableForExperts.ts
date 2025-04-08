@@ -5,11 +5,10 @@ import { createButtonForCollapse } from './expandButton';
 
 export function generateTableForExpert(tableData: ExperResultData[]) {
     const table = document.createElement('table');
-    table.classList.add('table', 'table-hover', 'table-bordered', 'table-sm');
+    table.classList.add('table', 'table-hover', 'table-bordered', 'table-sm', 'table-secondary');
+    table.id = 'expert-table';
 
-    // Create table header
     const thead = document.createElement('thead');
-    thead.classList.add('table-light');
     const headerRow = document.createElement('tr');
 
     // Define explicit column order
@@ -36,12 +35,12 @@ export function generateTableForExpert(tableData: ExperResultData[]) {
         headerColumnOrder.forEach((key) => {
             if (key === "taxon_id") return; // skip taxon_id column
 
-            const th = document.createElement('th');
+            const td = document.createElement('td');
             const value = rowData[key as keyof ExperResultData];
 
             if (key === "observations") {
                 const collapseButton = createButtonForCollapse(rowData.taxon_id);
-                th.appendChild(collapseButton);
+                td.appendChild(collapseButton);
 
                 const observationRow = document.createElement('tr');
                 observationRow.id = `observations-${rowData.taxon_id}`;
@@ -50,11 +49,11 @@ export function generateTableForExpert(tableData: ExperResultData[]) {
                 dummyCell.colSpan = headerColumnOrder.length;
                 observationRow.appendChild(dummyCell);
                 tbody.appendChild(observationRow);
-                
+
                 new Collapse(observationRow, {
                     toggle: false // Prevent automatic toggling
-                });                
-                
+                });
+
                 observationRow.addEventListener('show.bs.collapse', () => {
                     collapseButton.classList.add('active');
                     const isExpanded = observationRow.getAttribute('aria-expanded') === 'true';
@@ -72,22 +71,18 @@ export function generateTableForExpert(tableData: ExperResultData[]) {
                 const observationCount = document.createElement('span');
                 observationCount.classList.add('observation-count');
                 observationCount.textContent = `Iš viso: (${(value as ObservationData[]).length})`;
-                th.appendChild(observationCount);
+                td.appendChild(observationCount);
+            } else if (key === "expert_review") {
+                const reviewInput = document.createElement('textarea');
+                reviewInput.value = value?.toString() || '';
+                reviewInput.rows = 1;
+                reviewInput.cols = 50;
+                td.appendChild(reviewInput);
             } else {
-                th.textContent = value?.toString() || '';
+                td.textContent = value?.toString() || '';
             }
-            headerRow.appendChild(th);
 
-
-            // else if (key === "expert_review") {
-            //     const reviewInput = document.createElement('textarea');
-            //     reviewInput.value = value?.toString() || '';
-            //     reviewInput.rows = 1;
-            //     reviewInput.cols = 50;
-            //     td.appendChild(reviewInput);
-            // }
-
-
+            headerRow.appendChild(td);
         });
     });
 
