@@ -2,6 +2,7 @@ import apiManager from "./apisManager";
 import { displayAlert } from "./errorHandler";
 import { generateTableForExpert } from "../components/tableForExperts";
 import ExpertManager from "./ExpertManager";
+import { Collapse } from "bootstrap";
 
 export async function displayDataForExpert(loader: HTMLElement | null, resultPlaceHolder: HTMLElement, selectedYear: string, selectedCategory: string) {
     try {
@@ -46,6 +47,25 @@ export async function displayDataForExpert(loader: HTMLElement | null, resultPla
                     });
                 });
             });
+        });
+
+        const onlyWithCommentsInput = document.getElementById('only-with-comments') as HTMLInputElement;
+        onlyWithCommentsInput.addEventListener('change', () => {
+            const table = resultPlaceHolder.querySelector('table#expert-table');
+            if (table) {
+                const rows = table.querySelectorAll('tr');
+                rows.forEach(row => {
+                    const comment = row.querySelector('textarea');
+                    if (comment) {
+                        row.classList.toggle('hide', onlyWithCommentsInput.checked && comment.value === '');
+                    }
+
+                    if (row.classList.contains('collapse')) {
+                        const collapse = Collapse.getInstance(row);
+                        collapse?.hide();
+                    }
+                });
+            }
         });
     } catch (error) {
         displayAlert();

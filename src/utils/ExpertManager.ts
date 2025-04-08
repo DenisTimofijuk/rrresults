@@ -8,7 +8,7 @@ export default class ExpertManager {
             this.dataset.set(rowData.taxon_id, rowData);
         });
     }
-
+     
     getHeaderColumnOrder(){
         const firstValue = this.dataset.values().next().value;
         return firstValue ? Object.keys(firstValue).filter((key) => key !== "taxon_id") : [];
