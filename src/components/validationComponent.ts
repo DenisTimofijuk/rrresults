@@ -16,11 +16,6 @@ export function createValidationComponent(availableValidationPoints: Array<numbe
         radioInput.value = value.toString();
         radioInput.checked = existingValue === value;
 
-        // radioInput.addEventListener('change', () => {
-        //     radioContainer.setAttribute('data-value', value.toString());
-        // });
-        // radioContainer.setAttribute('data-value', existingValue.toString());
-
         const radioLabel = document.createElement('label');
         radioLabel.classList.add('form-check-label', 'hover-pointer', 'btn', 'btn-sm');
         radioLabel.classList.add(buttonDesignClassName);

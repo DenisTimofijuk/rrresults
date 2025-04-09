@@ -10,13 +10,14 @@
 
 <body>
     <div class="container-fluid">
-        <h1>Rūšių Ralis <span id="year-place-holder"></span></h1>
-        <div>
-            <label for="year-selected">Pasirinkite metus:</label>
-            <select name="year-selected" id="year-selected">
-                <option value="">----</option>
-            </select>
-            <button type="button" class="btn btn-sm btn-outline-primary" id="get-data-by-year">
+        <p class="fs-2">Rezultatai <span id="year-place-holder">-</span></p>
+        <div class="pannel-wrapper">
+            <div>
+                <select class="form-select" name="year-selected" id="year-selected">
+                    <option value="">Pasirinkite metus</option>
+                </select>
+            </div>
+            <button type="button" class="btn btn-outline-success" id="get-data-by-year">
                 Generuoti rezultatus
             </button>
         </div>
@@ -62,7 +63,7 @@
                     administratorių.</div>
             </div>
         </div>
-        <button type="button" id="reveal-next" class="btn btn-outline-primary hide">
+        <button type="button" id="reveal-next" class="btn btn-outline-success hide">
             Rodyti sekantį stulpelį <span id="visible-column-progress"></span>
         </button>
     </div>

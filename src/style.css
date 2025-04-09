@@ -76,3 +76,8 @@ div.pannel-wrapper {
 div.pannel-wrapper div {
     margin-right: 10px;
 }
+
+div.filter-panel .form-check-input:checked {
+    background-color: rgb(25, 135, 84);
+    border-color: rgb(25, 135, 84);
+}

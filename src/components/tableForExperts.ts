@@ -52,7 +52,7 @@ export function generateTableForExpert(dataManager: ExpertManager) {
                 pointsContainer.classList.add('points-container');
                                 
                 const groupValidationValue = dataManager.hasObservationGroupSamePoints(rowData['taxon_id']) ? dataManager.getRowData(rowData['taxon_id'])!.observations[0].points : '-Mixed';
-                const groupValidationComponent = createValidationComponent([0, 0.5, 1, '-Mixed'], rowData['taxon_id'].toString(), groupValidationValue, 'btn-outline-primary');
+                const groupValidationComponent = createValidationComponent([0, 0.5, 1, '-Mixed'], rowData['taxon_id'].toString(), groupValidationValue, 'btn-outline-success');
                 pointsContainer.appendChild(groupValidationComponent);
                 container.appendChild(pointsContainer);
 
