@@ -2,7 +2,7 @@ import './scss/styles.scss';
 import './style.css';
 import './styles/loader.css';
 import './styles/collapse.css';
-import { displayAlert } from './utils/errorHandler';
+import { displayAlert, hideAlert } from './utils/errorHandler';
 import { getURLParameter, updateURLParameter } from './utils/URLParametersHandler';
 import { getAvailableCategories } from './utils/getAvailableCategories';
 import { displayDataForExpert } from './utils/displayDataForExpert';
@@ -15,12 +15,13 @@ import { displayDataForExpert } from './utils/displayDataForExpert';
     const categorySelect = document.getElementById('category-selected') as HTMLSelectElement;
     const resultPlaceHolder = document.getElementById('results') as HTMLDivElement;
     const categoryPlaceHolder = document.getElementById('category-place-holder') as HTMLSpanElement;
+    const saveDataButton = document.getElementById('save-data') as HTMLButtonElement;
 
     let selectedCategory = getURLParameter('category');
 
     try {
         loader?.classList.remove('hide');
-        await getAvailableCategories(loader, categorySelect);
+        await getAvailableCategories(categorySelect);
         getDataButton.disabled = categorySelect.value === '';
     } catch (error) {
         displayAlert();
@@ -35,22 +36,31 @@ import { displayDataForExpert } from './utils/displayDataForExpert';
 
     getDataButton.addEventListener('click', async () => {
         if (!categorySelect.value) return;
+
         categoryPlaceHolder.textContent = categorySelect.options[categorySelect.selectedIndex].text;
-
+        hideAlert();
         resetContentView();
-        await displayDataForExpert(loader, resultPlaceHolder, categorySelect.value);
-
-        updateURLParameter('category', categorySelect.value);
+        
+        try {
+            loader?.classList.remove('hide');
+            await displayDataForExpert(resultPlaceHolder, categorySelect.value);
+            updateURLParameter('category', categorySelect.value);
+            saveDataButton.disabled = true;
+        } catch (error) {
+            displayAlert()
+        }finally{
+            loader?.classList.add('hide');
+        }
     })
 
     if (selectedCategory) {
         try {
             loader?.classList.remove('hide');
-            await getAvailableCategories(loader, categorySelect);
+            await getAvailableCategories(categorySelect);
             categorySelect.value = selectedCategory;
             categoryPlaceHolder.textContent = categorySelect.options[categorySelect.selectedIndex].text;
             getDataButton.disabled = false;
-            displayDataForExpert(loader, resultPlaceHolder, categorySelect.value);
+            displayDataForExpert(resultPlaceHolder, categorySelect.value);
         } catch (error) {
             displayAlert()
         } finally {

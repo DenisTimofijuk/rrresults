@@ -1,7 +1,6 @@
 import apiManager from "./apisManager";
-import { displayAlert } from "./errorHandler";
 
-export async function getAvailableCategories( loader: HTMLElement | null, categorySelect: HTMLSelectElement) {
+export async function getAvailableCategories(categorySelect: HTMLSelectElement) {
     try {
         const availableCategories = await apiManager.getAvailableCategories();
         categorySelect.innerHTML = '';
@@ -17,9 +16,7 @@ export async function getAvailableCategories( loader: HTMLElement | null, catego
             categorySelect.appendChild(option);
         });
     } catch (error) {
-        displayAlert();
-    }
-    finally {
-        loader?.classList.add('hide');
+        console.error(error);
+        throw new Error("Unable to get available categories.");
     }
 }

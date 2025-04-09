@@ -1,12 +1,10 @@
 import apiManager from "./apisManager";
-import { displayAlert } from "./errorHandler";
 import { generateTableForExpert } from "../components/tableForExperts";
 import ExpertManager from "./ExpertManager";
 import { Collapse } from "bootstrap";
 
-export async function displayDataForExpert(loader: HTMLElement | null, resultPlaceHolder: HTMLElement, selectedCategory: string) {
+export async function displayDataForExpert(resultPlaceHolder: HTMLElement, selectedCategory: string) {
     try {
-        loader?.classList.remove('hide');
         const results = await apiManager.getObservations(selectedCategory);
         const dataManager = new ExpertManager(results);
         const table = generateTableForExpert(dataManager);
@@ -68,8 +66,7 @@ export async function displayDataForExpert(loader: HTMLElement | null, resultPla
             }
         });
     } catch (error) {
-        displayAlert();
-    } finally {
-        loader?.classList.add('hide');
+        console.error(error);
+        throw new Error("Unable display data for experts.");
     }
 }
