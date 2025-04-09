@@ -7,21 +7,21 @@
         "observations": [
             {
                 "id": 10000000,
-                "points": 1,
+                "points": 0.5,
                 "team_name": "Bobausiniai tartigradai",
                 "user_name": "Michael Osinski",
                 "url": "https://www.inaturalist.org/observations/262499243"
             },
             {
                 "id": 10000001,
-                "points": 1,
+                "points": 0.5,
                 "team_name": "Kolibrinis sfinksas",
                 "user_name": "Carmen Barrows",
                 "url": "https://www.inaturalist.org/observations/262499243"
             },
             {
                 "id": 10000002,
-                "points": 1,
+                "points": 0.5,
                 "team_name": "Bobausiai",
                 "user_name": "Pablo Macejkovic",
                 "url": "https://www.inaturalist.org/observations/262499243"
@@ -36,28 +36,28 @@
         "observations": [
             {
                 "id": 10000010,
-                "points": 1,
+                "points": 0.5,
                 "team_name": "Kirkutis",
                 "user_name": "Kellie Watsica",
                 "url": "https://www.inaturalist.org/observations/262499243"
             },
             {
                 "id": 10000011,
-                "points": 1,
+                "points": 0.5,
                 "team_name": "Būdinu rūšis iki karalysčių",
                 "user_name": "Debbie Raynor",
                 "url": "https://www.inaturalist.org/observations/262499243"
             },
             {
                 "id": 10000012,
-                "points": 1,
+                "points": 0,
                 "team_name": "Būdinu rūšis iki karalysčių",
                 "user_name": "Blanca Heathcote",
                 "url": "https://www.inaturalist.org/observations/262499243"
             },
             {
                 "id": 10000013,
-                "points": 1,
+                "points": 0,
                 "team_name": "Mikro makro",
                 "user_name": "Mona Hodkiewicz",
                 "url": "https://www.inaturalist.org/observations/262499243"
