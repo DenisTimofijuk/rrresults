@@ -10,9 +10,9 @@ const mockApiService = new MockReviewApiService({
   });
 
 const apiManager = {
-    getObservations: (selectedYear: string, selectedCategory: string) => getJSONData<ExperResultData[]>(`./mock/observations.json?y=${selectedYear}&c=${selectedCategory}`),
+    getObservations: (selectedCategory: string) => getJSONData<ExperResultData[]>(`./mock/observations.json?c=${selectedCategory}`),
     getAvailableYears: () => getJSONData<number[]>('./mock/years.json'),
-    getAvailableCategories: (selectedYear: string) => getJSONData<RequestCategoriesResult>(`./mock/categories.json?y=${selectedYear}`),
+    getAvailableCategories: () => getJSONData<RequestCategoriesResult>(`./mock/categories.json`),
     getResultsByYear: (selectedYear: string) => getJSONData<ResultData>(`./mock/results.json?y=${selectedYear}`),
     saveExpertReview: (rowId: number, data: {points?: number, comments?: string}) => mockApiService.saveRowReview(rowId, data),
 };

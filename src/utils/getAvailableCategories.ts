@@ -1,9 +1,9 @@
 import apiManager from "./apisManager";
 import { displayAlert } from "./errorHandler";
 
-export async function getAvailableCategories( loader: HTMLElement | null, selectedYear: string, categorySelect: HTMLSelectElement) {
+export async function getAvailableCategories( loader: HTMLElement | null, categorySelect: HTMLSelectElement) {
     try {
-        const availableCategories = await apiManager.getAvailableCategories(selectedYear);
+        const availableCategories = await apiManager.getAvailableCategories();
         categorySelect.innerHTML = '';
         const defaultOption = document.createElement('option');
         defaultOption.value = '';

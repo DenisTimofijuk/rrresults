@@ -4,10 +4,10 @@ import { generateTableForExpert } from "../components/tableForExperts";
 import ExpertManager from "./ExpertManager";
 import { Collapse } from "bootstrap";
 
-export async function displayDataForExpert(loader: HTMLElement | null, resultPlaceHolder: HTMLElement, selectedYear: string, selectedCategory: string) {
+export async function displayDataForExpert(loader: HTMLElement | null, resultPlaceHolder: HTMLElement, selectedCategory: string) {
     try {
         loader?.classList.remove('hide');
-        const results = await apiManager.getObservations(selectedYear, selectedCategory);
+        const results = await apiManager.getObservations(selectedCategory);
         const dataManager = new ExpertManager(results);
         const table = generateTableForExpert(dataManager);
         resultPlaceHolder.appendChild(table);
