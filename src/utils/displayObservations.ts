@@ -9,7 +9,7 @@ export function generateSectionForObservations(taxon_id: number, dataManager: Ex
     newRowForObservations.classList.add('collapse');
 
     const newCellForObservations = document.createElement('td');
-    newCellForObservations.colSpan = dataManager.getHeaderColumnOrder().length;
+    newCellForObservations.colSpan = dataManager.getHeaderColumnOrder().length+1;
     newRowForObservations.appendChild(newCellForObservations);
 
     new Collapse(newRowForObservations, {

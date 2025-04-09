@@ -11,6 +11,11 @@ export function generateTableForExpert(dataManager: ExpertManager) {
 
     const thead = document.createElement('thead');
     const headerRow = document.createElement('tr');
+    
+    // Add extra collumn for rows indexing:
+    const indexCol = document.createElement('th');
+    indexCol.textContent = 'Nr.'
+    headerRow.appendChild(indexCol);
 
     dataManager.getHeaderColumnOrder().forEach((columnName) => {
         const th = document.createElement('th');
@@ -23,10 +28,15 @@ export function generateTableForExpert(dataManager: ExpertManager) {
 
     // Create table body
     const tbody = document.createElement('tbody');
+    let rowNumber = 1;
     dataManager.dataset.forEach((rowData) => {
         const headerRow = document.createElement('tr');
         headerRow.setAttribute('taxon_id', rowData.taxon_id.toString());
         tbody.appendChild(headerRow);
+        // Add extra collumn for rows indexing:
+        const indexCol = document.createElement('td');
+        indexCol.textContent = rowNumber.toString();
+        headerRow.appendChild(indexCol);
 
         // Process columns in the defined order
         dataManager.getHeaderColumnOrder().forEach((key) => {
@@ -69,6 +79,7 @@ export function generateTableForExpert(dataManager: ExpertManager) {
 
             headerRow.appendChild(td);
         });
+        rowNumber++;
     });
 
 
