@@ -6,20 +6,21 @@
     <link rel="icon" type="image/svg+xml" href="/rrresults/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite + TS</title>
-  <script type="module" crossorigin src="/rrresults/assets/main-DG8xOiPN.js"></script>
-  <link rel="modulepreload" crossorigin href="/rrresults/assets/errorHandler-DYSEXlZM.js">
-  <link rel="stylesheet" crossorigin href="/rrresults/assets/errorHandler-y12Evdag.css">
+  <script type="module" crossorigin src="/rrresults/assets/main-TtKqnv--.js"></script>
+  <link rel="modulepreload" crossorigin href="/rrresults/assets/errorHandler-DD_7j-yn.js">
+  <link rel="stylesheet" crossorigin href="/rrresults/assets/errorHandler-0I-u4NfP.css">
 </head>
 
 <body>
     <div class="container-fluid">
-        <h1>Rūšių Ralis <span id="year-place-holder"></span></h1>
-        <div>
-            <label for="year-selected">Pasirinkite metus:</label>
-            <select name="year-selected" id="year-selected">
-                <option value="">----</option>
-            </select>
-            <button type="button" class="btn btn-sm btn-outline-primary" id="get-data-by-year">
+        <p class="fs-3">Rezultatai <span id="year-place-holder">-</span></p>
+        <div class="pannel-wrapper">
+            <div>
+                <select class="form-select" name="year-selected" id="year-selected">
+                    <option value="">Pasirinkite metus</option>
+                </select>
+            </div>
+            <button type="button" class="btn btn-outline-success" id="get-data-by-year">
                 Generuoti rezultatus
             </button>
         </div>
@@ -65,7 +66,7 @@
                     administratorių.</div>
             </div>
         </div>
-        <button type="button" id="reveal-next" class="btn btn-outline-primary hide">
+        <button type="button" id="reveal-next" class="btn btn-outline-success hide">
             Rodyti sekantį stulpelį <span id="visible-column-progress"></span>
         </button>
     </div>

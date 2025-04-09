@@ -6,41 +6,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/svg+xml" href="/rrresults/vite.svg" />
     <title>Observations Review Page</title>
-  <script type="module" crossorigin src="/rrresults/assets/review-Dw-_EHU8.js"></script>
-  <link rel="modulepreload" crossorigin href="/rrresults/assets/errorHandler-DYSEXlZM.js">
-  <link rel="stylesheet" crossorigin href="/rrresults/assets/errorHandler-y12Evdag.css">
+  <script type="module" crossorigin src="/rrresults/assets/review-C2rO6Fdy.js"></script>
+  <link rel="modulepreload" crossorigin href="/rrresults/assets/errorHandler-DD_7j-yn.js">
+  <link rel="stylesheet" crossorigin href="/rrresults/assets/errorHandler-0I-u4NfP.css">
   <link rel="stylesheet" crossorigin href="/rrresults/assets/review-BW-eoopO.css">
 </head>
 
 <body>
     <div class="container-fluid">
-        <p class="fs-2"><span id="year-place-holder"></span> - <span id="category-place-holder"></span></p>
         <div class="pannel-wrapper">
-            <div>
-                <select class="form-select" name="year-selected" id="year-selected">
-                    <option value="">Pasirinkite metus</option>
-                </select>
-            </div>
             <div>
                 <select class="form-select" name="category-selected" id="category-selected">
                     <option value="">Pasirinkite kategoriją</option>
                 </select>
             </div>
             <div>
-                <button type="button" class="btn btn-outline-primary" id="get-data" disabled>
+                <button type="button" class="btn btn-outline-success" id="get-data" disabled>
                     Gauti rezultatus
+                </button>
+                <button type="button" class="btn btn-outline-info" id="save-data" disabled>
+                    Saugoti vertinimus
                 </button>
             </div>
         </div>
         <hr />
-        <div class="d-flex text-primary">
-            <div class="form-check form-switch form-check-reverse">
-                <input class="form-check-input" type="checkbox" id="only-with-comments">
-                <label class="form-check-label" for="only-with-comments">Rodyti eilutes tik su komentarais</label>
+        <div>
+            <p class="fs-3">Dabar vertinama - <span id="category-place-holder"></span></p>
+            <div class="d-flex text-success filter-panel">
+                <div class="form-check form-switch form-check-reverse">
+                    <input class="form-check-input" type="checkbox" id="only-with-comments">
+                    <label class="form-check-label" for="only-with-comments">Rodyti eilutes tik su komentarais</label>
+                </div>
             </div>
         </div>
-
-        <div id="results" class="table-responsive"></div>
+        
+        <div>
+            <div id="results" class="table-responsive"></div>
+        </div>
+        
         <div id="loader-wrapper" class="hide">
             <div class="loader">
                 <svg viewBox="0 0 18.528 35.424" version="1.1" y="0" x="0" height="369" width="193"
