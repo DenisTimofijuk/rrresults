@@ -65,11 +65,6 @@ export async function displayDataForExpert(resultPlaceHolder: HTMLElement, selec
                 });
             }
         });
-
-        const saveDataButton = document.getElementById('save-data') as HTMLButtonElement
-        saveDataButton.addEventListener('click', ()=>{
-            console.log(dataManager);
-        });
     } catch (error) {
         console.error(error);
         throw new Error("Unable display data for experts.");

@@ -3,6 +3,7 @@ import { createButtonForCollapse } from './expandButton';
 import { createValidationComponent } from './validationComponent';
 import ExpertManager from '../utils/ExpertManager';
 import { generateSectionForObservations } from "../utils/displayObservations";
+import { getHeaderName } from "../utils/getHeaderName";
 
 export function generateTableForExpert(dataManager: ExpertManager) {
     const table = document.createElement('table');
@@ -19,7 +20,8 @@ export function generateTableForExpert(dataManager: ExpertManager) {
 
     dataManager.getHeaderColumnOrder().forEach((columnName) => {
         const th = document.createElement('th');
-        th.textContent = columnName;
+        th.setAttribute('scope', "col");
+        th.textContent = getHeaderName(columnName);
         headerRow.appendChild(th);
     });
 
@@ -44,13 +46,19 @@ export function generateTableForExpert(dataManager: ExpertManager) {
             const value = rowData[key as keyof ExperResultData];
 
             if (key === "observations") {
+                const wrapper = document.createElement('div');
+                wrapper.classList.add('observations-panel-wrapper');
+                td.appendChild(wrapper);
+
+                const buttonWrapper = document.createElement('div');
                 const collapseButton = createButtonForCollapse(rowData.taxon_id);
-                td.appendChild(collapseButton);
+                buttonWrapper.appendChild(collapseButton);
+                wrapper.appendChild(buttonWrapper);
 
                 const observationCount = document.createElement('span');
                 observationCount.classList.add('observation-count');
                 observationCount.textContent = `Iš viso: (${dataManager.getRowData(rowData["taxon_id"])!.observations.length})`;
-                td.appendChild(observationCount);
+                wrapper.appendChild(observationCount);
 
                 tbody.appendChild(generateSectionForObservations(rowData["taxon_id"], dataManager, collapseButton));
 

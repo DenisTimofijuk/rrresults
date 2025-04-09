@@ -2,6 +2,7 @@ import './scss/styles.scss';
 import './style.css';
 import './styles/loader.css';
 import './styles/collapse.css';
+import './styles/observation-table.css';
 import { displayAlert, hideAlert } from './utils/errorHandler';
 import { getURLParameter, updateURLParameter } from './utils/URLParametersHandler';
 import { getAvailableCategories } from './utils/getAvailableCategories';
@@ -15,7 +16,6 @@ import { displayDataForExpert } from './utils/displayDataForExpert';
     const categorySelect = document.getElementById('category-selected') as HTMLSelectElement;
     const resultPlaceHolder = document.getElementById('results') as HTMLDivElement;
     const categoryPlaceHolder = document.getElementById('category-place-holder') as HTMLSpanElement;
-    const saveDataButton = document.getElementById('save-data') as HTMLButtonElement;
 
     let selectedCategory = getURLParameter('category');
 
@@ -45,7 +45,6 @@ import { displayDataForExpert } from './utils/displayDataForExpert';
             loader?.classList.remove('hide');
             await displayDataForExpert(resultPlaceHolder, categorySelect.value);
             updateURLParameter('category', categorySelect.value);
-            saveDataButton.disabled = true;
         } catch (error) {
             displayAlert()
         }finally{

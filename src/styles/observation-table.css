@@ -1,0 +1,15 @@
+table.observation-table th.observation-column-points{
+    width: 25%;
+}
+
+table.observation-table th.observation-column-team_name{
+    width: 25%;
+}
+
+table.observation-table th.observation-column-user_name{
+    width: 25%;
+}
+
+table.observation-table th.observation-column-url{
+    width: 25%;
+}

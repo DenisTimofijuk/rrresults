@@ -1,4 +1,5 @@
 import { ObservationData } from "../types/ExpertTableData.type";
+import { getHeaderName } from "../utils/getHeaderName";
 import { createValidationComponent } from "./validationComponent";
 
 export function createTableForObservations(data: ObservationData[], observationColumnOreder: string[]) {
@@ -11,7 +12,9 @@ export function createTableForObservations(data: ObservationData[], observationC
         if (observationKey === "id") return; // skip id column
 
         const th = document.createElement('th');
-        th.textContent = observationKey;
+        th.textContent = getHeaderName(observationKey);
+        th.setAttribute('scope', "col");
+        th.className = `observation-column-${observationKey}`;
         headerRow.appendChild(th);
     });
     thead.appendChild(headerRow);
