@@ -7,14 +7,14 @@
         "observations": [
             {
                 "id": 10000000,
-                "points": 0,
+                "points": 0.5,
                 "team_name": "Bobausiniai tartigradai",
                 "user_name": "Michael Osinski",
                 "url": "https://www.inaturalist.org/observations/262499243"
             },
             {
                 "id": 10000001,
-                "points": 0,
+                "points": 0.5,
                 "team_name": "Kolibrinis sfinksas",
                 "user_name": "Carmen Barrows",
                 "url": "https://www.inaturalist.org/observations/262499243"
