@@ -1,12 +1,12 @@
 import apiManager from "./apisManager";
 import { generateTableForExpert } from "../components/tableForExperts";
-import ExpertManager from "./ExpertManager";
+import ExpertDataManager from "./ExpertDataManager";
 import { Collapse } from "bootstrap";
 
 export async function displayDataForExpert(resultPlaceHolder: HTMLElement, selectedCategory: string) {
     try {
         const results = await apiManager.getObservations(selectedCategory);
-        const dataManager = new ExpertManager(results);
+        const dataManager = new ExpertDataManager(results);
         const table = generateTableForExpert(dataManager);
         resultPlaceHolder.appendChild(table);
 

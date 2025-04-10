@@ -1,0 +1,1 @@
+export enum ObservationStatus { idle, pending, success, error};

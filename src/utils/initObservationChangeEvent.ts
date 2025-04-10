@@ -1,6 +1,6 @@
-import ExpertManager from "./ExpertManager";
+import ExpertDataManager from "./ExpertDataManager";
 
-export function initObservationChangeEvent(dataManager: ExpertManager, observationTable: HTMLTableElement) {
+export function initObservationChangeEvent(dataManager: ExpertDataManager, observationTable: HTMLTableElement) {
     const radioButtons = observationTable.querySelectorAll('input[type="radio"]') as NodeListOf<HTMLInputElement>;
     radioButtons?.forEach((radioButton) => {
         radioButton.addEventListener('change', (event) => {

@@ -1,11 +1,11 @@
 import { ExperResultData } from "../types/ExpertTableData.type";
 import { createButtonForCollapse } from './expandButton';
 import { createValidationComponent } from './validationComponent';
-import ExpertManager from '../utils/ExpertManager';
+import ExpertDataManager from '../utils/ExpertDataManager';
 import { generateSectionForObservations } from "../utils/displayObservations";
 import { getHeaderName } from "../utils/getHeaderName";
 
-export function generateTableForExpert(dataManager: ExpertManager) {
+export function generateTableForExpert(dataManager: ExpertDataManager) {
     const table = document.createElement('table');
     table.classList.add('table', 'table-hover', 'table-bordered', 'table-sm', 'table-secondary');
     table.id = 'expert-table';

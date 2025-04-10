@@ -14,7 +14,14 @@ const apiManager = {
     getAvailableYears: () => getJSONData<number[]>('./mock/years.json'),
     getAvailableCategories: () => getJSONData<RequestCategoriesResult>(`./mock/categories.json`),
     getResultsByYear: (selectedYear: string) => getJSONData<ResultData>(`./mock/results.json?y=${selectedYear}`),
-    saveExpertReview: (rowId: number, data: {points?: number, comments?: string}) => mockApiService.saveRowReview(rowId, data),
+    savePointsForObservations: (data: Array<{
+      observation_id: number;
+      points: number;
+  }>) => {
+    // TODO: refactor to actual fetching end point with expected format.
+    console.log(JSON.stringify(data));
+    return mockApiService.saveRowReview(0, data)
+  },
 };
 
 export default apiManager;
