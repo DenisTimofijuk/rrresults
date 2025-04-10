@@ -76,6 +76,4 @@ import { observationStatusChangedHandler } from './utils/observationStatusChange
         onlyWithCommentsInput.checked = false;
         document.removeEventListener('observationStatusChanged', observationStatusChangedHandler);
     }
-
-    // console.log(generateMockDataForExperts());
 })();

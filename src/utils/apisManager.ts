@@ -22,9 +22,12 @@ const apiManager = {
     console.log('Posting as stringified JSON:', JSON.stringify(data));
     return mockApiService.saveRowReview(0, data)
   },
-  savereviewComment: (taxonID: number, comment: string) => { 
+  saveReviewComment: (data: {
+    taxonID: number;
+    comment: string
+  }) => {
     // TODO: refactor to actual fetching endpoint with expected format.
-    return mockApiService.saveRowReview(taxonID, {comment})
+    return mockApiService.saveRowReview(0, data)
   }
 };
 

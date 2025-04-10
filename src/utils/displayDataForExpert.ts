@@ -3,6 +3,7 @@ import { generateTableForExpert } from "../components/tableForExperts";
 import ExpertDataManager from "./ExpertDataManager";
 import { Collapse } from "bootstrap";
 import { observationStatusChangedHandler } from "./observationStatusChanged";
+import { initCommentsAutoSave } from "./autoSaveComments";
 
 export async function displayDataForExpert(resultPlaceHolder: HTMLElement, selectedCategory: string) {
     try {
@@ -16,21 +17,13 @@ export async function displayDataForExpert(resultPlaceHolder: HTMLElement, selec
             const parentRow = container.closest('tr');
             const taxon_id = Number(parentRow!.getAttribute('taxon_id'));
 
-            const textarea = container.querySelector('textarea');
-            textarea?.addEventListener('change', (event) => {
-                const target = event.target as HTMLTextAreaElement;
-                const value = target.value;
-                if (!taxon_id) return;
-                dataManager.setComment(taxon_id, value);
-            });
-
             const pointsContainer = container.querySelector('.points-container');
             const radioButtons = pointsContainer?.querySelectorAll('input[type="radio"]') as NodeListOf<HTMLInputElement>;
             radioButtons?.forEach((radioButton) => {
                 radioButton.addEventListener('change', (event) => {
                     const selectedValue = (event.target as HTMLInputElement).value;
                     if (!taxon_id) return;
-                    dataManager.setGroupPoints(taxon_id, Number(selectedValue));
+                    dataManager.postGroupPoints(taxon_id, Number(selectedValue));
                     const observationTable = document.querySelector(`table.observation-table[data-taxon-id="${taxon_id}"]`);
                     if (!observationTable) return;
                     const observationRows = observationTable.querySelectorAll('tbody tr');
@@ -66,6 +59,8 @@ export async function displayDataForExpert(resultPlaceHolder: HTMLElement, selec
                 });
             }
         });
+
+        initCommentsAutoSave(table, dataManager);
 
         document.addEventListener('observationStatusChanged', observationStatusChangedHandler)
     } catch (error) {

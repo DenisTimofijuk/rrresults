@@ -14,7 +14,7 @@ export function initObservationChangeEvent(dataManager: ExpertDataManager, obser
                 console.error("Taxon ID or Observation ID not found.");
                 return
             };
-            dataManager.setObservationPoints(taxon_id, observationId, Number(selectedValue));
+            dataManager.postObservationPoints(taxon_id, observationId, Number(selectedValue));
 
             const groupValidationValue = dataManager.hasObservationGroupSamePoints(taxon_id) ? Number(selectedValue) : "-Mixed";
 
