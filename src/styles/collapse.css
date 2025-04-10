@@ -20,11 +20,6 @@ div.observations-panel-wrapper{
     align-items: center;
 }
 
-.observation-table{
-    max-width: 95vw;
-    margin-left: auto;
-}
-
 .expert-review-container {
     display: flex;
     flex-direction: row;

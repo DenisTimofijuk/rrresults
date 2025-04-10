@@ -7,6 +7,7 @@ export function getHeaderName(key: string) {
         points: 'Taškai',
         team_name: 'Komanda',
         user_name: 'Dalyvis',
-        url: 'Nuoroda'
+        url: 'Nuoroda',
+        s: 'Status'
     }[key] || key;
 }

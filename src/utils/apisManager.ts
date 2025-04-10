@@ -18,8 +18,8 @@ const apiManager = {
       observation_id: number;
       points: number;
   }>) => {
-    // TODO: refactor to actual fetching end point with expected format.
-    console.log(JSON.stringify(data));
+    // TODO: refactor to actual fetching endpoint with expected format.
+    console.log('Posting as stringified JSON:', JSON.stringify(data));
     return mockApiService.saveRowReview(0, data)
   },
 };

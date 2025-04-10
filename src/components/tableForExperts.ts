@@ -4,6 +4,7 @@ import { createValidationComponent } from './validationComponent';
 import ExpertDataManager from '../utils/ExpertDataManager';
 import { generateSectionForObservations } from "../utils/displayObservations";
 import { getHeaderName } from "../utils/getHeaderName";
+import { createStatusElement } from "./statusElement";
 
 export function generateTableForExpert(dataManager: ExpertDataManager) {
     const table = document.createElement('table');
@@ -17,6 +18,12 @@ export function generateTableForExpert(dataManager: ExpertDataManager) {
     const indexCol = document.createElement('th');
     indexCol.textContent = 'Nr.'
     headerRow.appendChild(indexCol);
+
+    // Add extra collumn for status indication:
+    const statusCol = document.createElement('th');
+    statusCol.textContent = getHeaderName("s");
+    statusCol.classList.add('status-col');
+    headerRow.appendChild(statusCol);
 
     dataManager.getHeaderColumnOrder().forEach((columnName) => {
         const th = document.createElement('th');
@@ -39,6 +46,12 @@ export function generateTableForExpert(dataManager: ExpertDataManager) {
         const indexCol = document.createElement('td');
         indexCol.textContent = rowNumber.toString();
         headerRow.appendChild(indexCol);
+
+        // Add extra column for status indication:
+        const statusCell = document.createElement('td')
+        statusCell.classList.add('status-cell');
+        statusCell.appendChild(createStatusElement(rowData.taxon_id));
+        headerRow.appendChild(statusCell);
 
         // Process columns in the defined order
         dataManager.getHeaderColumnOrder().forEach((key) => {

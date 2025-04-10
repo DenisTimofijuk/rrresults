@@ -2,6 +2,7 @@ import apiManager from "./apisManager";
 import { generateTableForExpert } from "../components/tableForExperts";
 import ExpertDataManager from "./ExpertDataManager";
 import { Collapse } from "bootstrap";
+import { observationStatusChangedHandler } from "./observationStatusChanged";
 
 export async function displayDataForExpert(resultPlaceHolder: HTMLElement, selectedCategory: string) {
     try {
@@ -65,6 +66,8 @@ export async function displayDataForExpert(resultPlaceHolder: HTMLElement, selec
                 });
             }
         });
+
+        document.addEventListener('observationStatusChanged', observationStatusChangedHandler)
     } catch (error) {
         console.error(error);
         throw new Error("Unable display data for experts.");

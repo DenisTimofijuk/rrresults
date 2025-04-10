@@ -1,5 +1,6 @@
 import { ObservationData } from "../types/ExpertTableData.type";
 import { getHeaderName } from "../utils/getHeaderName";
+import { createStatusElement } from "./statusElement";
 import { createValidationComponent } from "./validationComponent";
 
 export function createTableForObservations(data: ObservationData[], observationColumnOreder: string[]) {
@@ -8,6 +9,14 @@ export function createTableForObservations(data: ObservationData[], observationC
     const thead = document.createElement('thead');
     thead.classList.add('table-light');
     const headerRow = document.createElement('tr');
+
+    // create additional column for status indication:
+    const statusTh = document.createElement('th');
+    statusTh.setAttribute('scope', "col");
+    statusTh.className = `status-col`;
+    statusTh.textContent = getHeaderName("s");
+    headerRow.appendChild(statusTh);
+
     observationColumnOreder.forEach((observationKey) => {
         if (observationKey === "id") return; // skip id column
 
@@ -26,6 +35,13 @@ export function createTableForObservations(data: ObservationData[], observationC
         const observationRow = document.createElement('tr');
         observationRow.dataset['observationId'] = observation['id'].toString() || '';
         tbody.appendChild(observationRow);
+
+        // create additional column for status indication:
+        const statusCell = document.createElement('th');
+        statusCell.className = 'status-cell';
+        statusCell.appendChild(createStatusElement(observation['id']));
+        observationRow.appendChild(statusCell);
+
         observationColumnOreder.forEach((observationKey) => {
             if (observationKey === "id") return; // skip id column
 

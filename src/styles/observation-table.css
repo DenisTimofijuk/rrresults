@@ -13,3 +13,7 @@ table.observation-table th.observation-column-user_name{
 table.observation-table th.observation-column-url{
     width: 25%;
 }
+
+.observation-table{
+    margin-left: auto;
+}

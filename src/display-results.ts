@@ -1,5 +1,5 @@
 import { initResultTable } from './components/resultTableAnimated';
-import './scss/styles.scss';
+import './scss/results.scss';
 import './style.css';
 import './styles/loader.css';
 import { ResultData } from './types/Rezults.type';

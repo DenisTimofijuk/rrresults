@@ -1,4 +1,4 @@
-import './scss/styles.scss';
+import './scss/observation-review-style.scss';
 import './style.css';
 import './styles/loader.css';
 import './styles/collapse.css';
@@ -7,6 +7,7 @@ import { displayAlert, hideAlert } from './utils/errorHandler';
 import { getURLParameter, updateURLParameter } from './utils/URLParametersHandler';
 import { getAvailableCategories } from './utils/getAvailableCategories';
 import { displayDataForExpert } from './utils/displayDataForExpert';
+import { observationStatusChangedHandler } from './utils/observationStatusChanged';
 
 // For now, we will ignore the authentication problem and continue with the scenario as if the users were authorized.
 
@@ -73,6 +74,7 @@ import { displayDataForExpert } from './utils/displayDataForExpert';
         resultPlaceHolder.innerHTML = '';
         const onlyWithCommentsInput = document.getElementById('only-with-comments') as HTMLInputElement;
         onlyWithCommentsInput.checked = false;
+        document.removeEventListener('observationStatusChanged', observationStatusChangedHandler);
     }
 
     // console.log(generateMockDataForExperts());

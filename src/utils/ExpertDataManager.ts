@@ -1,4 +1,4 @@
-import { ObservationStatus } from "../types/ExpertDataManager.type";
+import { ObservationStatus, ObservationStatusChangeEventDetails } from "../types/ExpertDataManager.type";
 import { ExperResultData } from "../types/ExpertTableData.type";
 import apiManager from "./apisManager";
 
@@ -89,6 +89,7 @@ export default class ExpertDataManager {
             this._setStatus(obs.id, ObservationStatus.pending);
             return { observation_id: obs.id, points };
         });
+        this._setStatus(taxonId, ObservationStatus.pending);
 
         const postPromise = this._getPostPromise(payload, taxonId, observations.map(obs => obs.id))
         this.pendingRequests.set(taxonId, postPromise);
@@ -104,10 +105,12 @@ export default class ExpertDataManager {
                 observationIDs.forEach(obsid => {
                     this._setStatus(obsid, newStatus);
                 });
+                this._setStatus(id, newStatus);
             })
             .catch(err => {
                 console.error(`Final failure for group ${id}:`, err);
                 observationIDs.forEach(obsid => this._setStatus(obsid, ObservationStatus.error));
+                this._setStatus(id, ObservationStatus.error);
             })
             .finally(() => {
                 this.pendingRequests.delete(id);
@@ -138,16 +141,16 @@ export default class ExpertDataManager {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
-    private _setStatus(observationId: number, status: ObservationStatus) {
-        this.observationStatus.set(observationId, status);
-        this._emitStatusUpdate(observationId, status);
+    private _setStatus(id: number, status: ObservationStatus) {
+        this.observationStatus.set(id, status);
+        this._emitStatusUpdate(id, status);
     }
 
     // Emit a custom DOM event so your UI (vanilla JS) can respond
-    private _emitStatusUpdate(observationId: number, status: ObservationStatus) {
+    private _emitStatusUpdate(id: number, status: ObservationStatus) {
         const event = new CustomEvent('observationStatusChanged', {
-            detail: { observationId, status }
+            detail : { id, status } as ObservationStatusChangeEventDetails
         });
-        window.dispatchEvent(event);
+        document.dispatchEvent(event);
     }
 }
