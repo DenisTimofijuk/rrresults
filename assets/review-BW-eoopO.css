@@ -1,1 +1,0 @@
-.collapse-button:after{content:" ▼";font-size:.8em;transition:transform .3s ease;display:inline-block}.collapse-button.active:after{transform:rotate(180deg)}.collapse-button{margin-right:5px}.observation-table{max-width:95vw;margin-left:auto}.expert-review-container{display:flex;flex-direction:row}
