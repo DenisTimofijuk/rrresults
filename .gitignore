@@ -24,3 +24,5 @@ dist-ssr
 *.sw?
 
 *workspace
+
+prompt-templates.txt
