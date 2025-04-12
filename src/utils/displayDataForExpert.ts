@@ -2,7 +2,7 @@ import apiManager from "./apisManager";
 import { generateTableForExpert } from "../components/tableForExperts";
 import ExpertDataManager from "./ExpertDataManager";
 import { Collapse } from "bootstrap";
-import { observationStatusChangedHandler } from "./observationStatusChanged";
+import { observationStatusChangedHandler } from "./observationStatusChangedHandler";
 import { initCommentsAutoSave } from "./autoSaveComments";
 
 export async function displayDataForExpert(resultPlaceHolder: HTMLElement, selectedCategory: string) {

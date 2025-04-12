@@ -7,7 +7,7 @@ import { displayAlert, hideAlert } from './utils/errorHandler';
 import { getURLParameter, updateURLParameter } from './utils/URLParametersHandler';
 import { getAvailableCategories } from './utils/getAvailableCategories';
 import { displayDataForExpert } from './utils/displayDataForExpert';
-import { observationStatusChangedHandler } from './utils/observationStatusChanged';
+import { observationStatusChangedHandler } from './utils/observationStatusChangedHandler';
 
 // For now, we will ignore the authentication problem and continue with the scenario as if the users were authorized.
 
