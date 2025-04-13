@@ -49,8 +49,9 @@ import { initiateDisplayOnlyCommentsFilter } from './utils/initiateDisplayOnlyCo
         
         try {
             loader?.classList.remove('hide');
-            await displayDataForExpert(resultPlaceHolder, categorySelect.value);
-            urlParameters.update('category', categorySelect.value);
+            urlParameters.update('category', categorySelect.value);   
+                 
+            await displayDataForExpert(resultPlaceHolder, categorySelect.value);    
         } catch (error) {
             displayAlert()
         }finally{
@@ -61,7 +62,6 @@ import { initiateDisplayOnlyCommentsFilter } from './utils/initiateDisplayOnlyCo
     if (selectedCategory) {
         try {
             loader?.classList.remove('hide');
-            await getAvailableCategories(categorySelect);
             categorySelect.value = selectedCategory;
             categoryPlaceHolder.textContent = categorySelect.options[categorySelect.selectedIndex].text;
             getDataButton.disabled = false;
@@ -80,5 +80,6 @@ import { initiateDisplayOnlyCommentsFilter } from './utils/initiateDisplayOnlyCo
         const onlyWithCommentsInput = document.getElementById('only-with-comments') as HTMLInputElement;
         onlyWithCommentsInput.checked = false;
         onlyWithCommentsInput.disabled = true;
+        urlParameters.delete('page'); // Reset page to 1 when category changes
     }
 })();

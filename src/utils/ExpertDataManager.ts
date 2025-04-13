@@ -239,9 +239,3 @@ export default class ExpertDataManager {
         document.dispatchEvent(event);
     }
 }
-
-// TODO:on page load generate table if page param is present in the URL
-// set current visible page - active
-// fix filters - only with comments
-// fix table column width - fixed values
-// change pagination color design

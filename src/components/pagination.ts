@@ -1,24 +1,9 @@
 import { PageChanged } from "../types/customEvents.type";
-import { urlParameters } from "../utils/URLParametersHandler";
 
-export function generatePagination(totalPages: number) {
+export function generatePagination(totalPages: number, startingPage: string) {
     // TODO: handle large number of pages
-
-    // Solve issue if table is generated on page load
-    // or was it generated on button click
-    // if it was on page load, we do not delete url parameter
-
-
-    urlParameters.delete('page');
-    // there is nothing to collect now because we are deleting it:
-    let page = urlParameters.get('page');
-
-    if (page === null) {
-        page = '1';
-    } else {
-        page = page.toString();
-    }
-    let currentPage = parseInt(page, 10);
+    
+    let currentPage = parseInt(startingPage, 10);
     const paginationItems:HTMLLIElement[] = [];
 
     const pagination = document.createElement('ul');
@@ -46,7 +31,7 @@ export function generatePagination(totalPages: number) {
         }, `${value}`);
         pagination.appendChild(li);
 
-        if (value === 1) {
+        if (value === currentPage) {
             li.classList.add('active');
         }
         paginationItems.push(li);
@@ -86,16 +71,15 @@ function generatePaginationElement(handler: (e: Event) => void, text: string, in
     return li;
 }
 
-function handleActivePageIndicaton(pagination: HTMLUListElement, li: HTMLLIElement) {
+function handleActivePageIndicaton(pagination: HTMLUListElement, element: HTMLLIElement) {
     const active = pagination.querySelector('.active') as HTMLLIElement;
     if (active) {
         active.classList.remove('active');
     }
-    li.classList.add('active');
+    element.classList.add('active');
 }
 
 function fireChangeEvent(value: number) {
-    urlParameters.update('page', `${value}`);
     const event = new CustomEvent<PageChanged>('pageChanged', { detail: { page: value } });
     document.dispatchEvent(event);
 }

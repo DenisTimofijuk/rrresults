@@ -5,36 +5,28 @@ import { initCommentsAutoSave } from "./autoSaveComments";
 import { generatePagination } from "../components/pagination";
 import { initSetPointsPerGroup } from "./initSetPointsPerGroup";
 import { PageChanged } from "../types/customEvents.type";
+import { urlParameters } from "./URLParametersHandler";
 
 export async function displayDataForExpert(resultPlaceHolder: HTMLElement, selectedCategory: string) {
     try {
         const results = await apiManager.getObservations(selectedCategory);
         const dataManager = new ExpertDataManager(results);
 
-        // TODO: implement SPA
-        // generate pagination
-        // regenarate table depending on pagination active item
+        const currentPage = urlParameters.get('page') || '1';
+        dataManager.currentPage = parseInt(currentPage, 10);
 
-        // TODO: generate table if url has page param
-
-        const paginationWrapper = document.getElementById('review-pagination-wrapper') as HTMLDivElement;
-        paginationWrapper.innerHTML = ''; // Clear previous pagination
-        paginationWrapper.appendChild(generatePagination(dataManager.getTotalPages()));
-
+        createPaginations(['review-pagination-wrapper-bottom'], dataManager.getTotalPages(), currentPage);
+        
         const table = generateTableForExpert(dataManager);
         resultPlaceHolder.appendChild(table);
 
         initSetPointsPerGroup(dataManager);
         initCommentsAutoSave(table, dataManager);
 
-        // listen for an CustomEvenPageChanged event when the page is changed
         document.addEventListener('pageChanged', (event) => {
-            // paginationWrapper.querySelectorAll('li.page-item').forEach((item) => {
-            //     item.classList.add('disabled');
-            // });
-
             const page = (event as CustomEvent<PageChanged>).detail.page;
             dataManager.currentPage = page;
+            urlParameters.update('page', page.toString());
 
             resultPlaceHolder.innerHTML = ''; // Clear previous table
             const table = generateTableForExpert(dataManager);
@@ -42,13 +34,7 @@ export async function displayDataForExpert(resultPlaceHolder: HTMLElement, selec
 
             initSetPointsPerGroup(dataManager);
             initCommentsAutoSave(table, dataManager);
-
-            // paginationWrapper.querySelectorAll('li.page-item').forEach((item) => {
-            //     item.classList.remove('disabled');
-            // });
         });
-
-        // and regenerate the table
     } catch (error) {
         console.error(error);
         throw new Error("Unable display data for experts.");
@@ -56,4 +42,12 @@ export async function displayDataForExpert(resultPlaceHolder: HTMLElement, selec
         const onlyWithCommentsInput = document.getElementById('only-with-comments') as HTMLInputElement;
         onlyWithCommentsInput.disabled = false;
     }
+}
+
+function createPaginations(ids: string[], totalPages: number, currentPage: string) {
+    ids.forEach((id) => {
+        const paginationWrapper = document.getElementById(id) as HTMLDivElement;
+        paginationWrapper.innerHTML = ''; // Clear previous pagination
+        paginationWrapper.appendChild(generatePagination(totalPages, currentPage));
+    })
 }
