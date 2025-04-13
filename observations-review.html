@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/svg+xml" href="/rrresults/vite.svg" />
     <title>Observations Review Page</title>
-  <script type="module" crossorigin src="/rrresults/assets/review-injVfEUR.js"></script>
-  <link rel="modulepreload" crossorigin href="/rrresults/assets/errorHandler-q2yoKC-3.js">
+  <script type="module" crossorigin src="/rrresults/assets/review-CgslONKF.js"></script>
+  <link rel="modulepreload" crossorigin href="/rrresults/assets/errorHandler-DDnOlV5w.js">
   <link rel="stylesheet" crossorigin href="/rrresults/assets/errorHandler-DLX6LeM6.css">
-  <link rel="stylesheet" crossorigin href="/rrresults/assets/review-Di7PC_Jv.css">
+  <link rel="stylesheet" crossorigin href="/rrresults/assets/review-Bw6bk3-s.css">
 </head>
 
 <body>
@@ -27,20 +27,26 @@
             </div>
         </div>
         <hr />
-        <div>
-            <p class="fs-3">Dabar vertinama - <span id="category-place-holder"></span></p>
-            <div class="d-flex text-success filter-panel">
-                <div class="form-check form-switch form-check-reverse">
-                    <input class="form-check-input" type="checkbox" id="only-with-comments">
-                    <label class="form-check-label" for="only-with-comments">Rodyti eilutes tik su komentarais</label>
+        <div class="d-flex justify-content-between align-items-end">
+            <div>
+                <p class="fs-3">Dabar vertinama - <span id="category-place-holder"></span></p>
+                <div class="d-flex text-success filter-panel mb-3">
+                    <div class="form-check form-switch form-check-reverse">
+                        <input class="form-check-input" type="checkbox" id="only-with-comments" disabled>
+                        <label class="form-check-label" for="only-with-comments">Rodyti eilutes tik su
+                            komentarais</label>
+                    </div>
                 </div>
             </div>
+            <div>
+                <nav aria-label="Table navigation" id="review-pagination-wrapper-top"></nav>
+            </div>
         </div>
-        
+
         <div>
             <div id="results" class="table-responsive"></div>
         </div>
-        
+
         <div id="loader-wrapper" class="hide">
             <div class="loader">
                 <svg viewBox="0 0 18.528 35.424" version="1.1" y="0" x="0" height="369" width="193"
@@ -80,6 +86,9 @@
                 <div id="error-text">Įvyko klaida, trūksta duoemnų. Bandykite dar kartą arba kreipkitės į
                     administratorių.</div>
             </div>
+        </div>
+        <div>
+            <nav aria-label="Table navigation" id="review-pagination-wrapper-bottom"></nav>
         </div>
     </div>
 </body>

@@ -18,8 +18,7 @@
             {"title": "Kiti vabzdžiai", "value": 253},
             {"title": "Paukščiai", "value": 206},
             {"title": "Induočiai augalai", "value": 17}
-        ],
-        "comments": ["Neturiu komentarų."]
+        ]
     },
     {
         "teamName": "Tundra",
@@ -40,8 +39,7 @@
             {"title": "Kiti vabzdžiai", "value": 212},
             {"title": "Paukščiai", "value": 66},
             {"title": "Induočiai augalai", "value": 8}
-        ],
-        "comments": [""]
+        ]
     },
     {
         "teamName": "Universalai",
@@ -62,8 +60,7 @@
             {"title": "Kiti vabzdžiai", "value": 202},
             {"title": "Paukščiai", "value": 275},
             {"title": "Induočiai augalai", "value": 15}
-        ],
-        "comments": [""]
+        ]
     },
     {
         "teamName": "Bobausiniai tartigradai",
@@ -84,8 +81,7 @@
             {"title": "Kiti vabzdžiai", "value": 73},
             {"title": "Paukščiai", "value": 113},
             {"title": "Induočiai augalai", "value": 30}
-        ],
-        "comments": [""]
+        ]
     },
     {
         "teamName": "Laukiniai",
@@ -106,8 +102,7 @@
             {"title": "Kiti vabzdžiai", "value": 239},
             {"title": "Paukščiai", "value": 45},
             {"title": "Induočiai augalai", "value": 0}
-        ],
-        "comments": [""]
+        ]
     },
     {
         "teamName": "Būdinu rūšis iki karalysčių",
@@ -128,8 +123,7 @@
             {"title": "Kiti vabzdžiai", "value": 281},
             {"title": "Paukščiai", "value": 56},
             {"title": "Induočiai augalai", "value": 2}
-        ],
-        "comments": [""]
+        ]
     },
     {
         "teamName": "Dream team",
@@ -150,8 +144,7 @@
             {"title": "Kiti vabzdžiai", "value": 145},
             {"title": "Paukščiai", "value": 280},
             {"title": "Induočiai augalai", "value": 2}
-        ],
-        "comments": [""]
+        ]
     },
     {
         "teamName": "Hienos",
@@ -172,8 +165,7 @@
             {"title": "Kiti vabzdžiai", "value": 6},
             {"title": "Paukščiai", "value": 164},
             {"title": "Induočiai augalai", "value": 26}
-        ],
-        "comments": [""]
+        ]
     },
     {
         "teamName": "Kapibaros",
@@ -194,8 +186,7 @@
             {"title": "Kiti vabzdžiai", "value": 31},
             {"title": "Paukščiai", "value": 70},
             {"title": "Induočiai augalai", "value": 11}
-        ],
-        "comments": [""]
+        ]
     },
     {
         "teamName": "Triogloditai",
@@ -216,8 +207,7 @@
             {"title": "Kiti vabzdžiai", "value": 64},
             {"title": "Paukščiai", "value": 285},
             {"title": "Induočiai augalai", "value": 15}
-        ],
-        "comments": [""]
+        ]
     },
     {
         "teamName": "Beržai keružiai",
@@ -238,8 +228,7 @@
             {"title": "Kiti vabzdžiai", "value": 147},
             {"title": "Paukščiai", "value": 90},
             {"title": "Induočiai augalai", "value": 17}
-        ],
-        "comments": [""]
+        ]
     },
     {
         "teamName": "Kolibrinis sfinksas",
@@ -260,8 +249,7 @@
             {"title": "Kiti vabzdžiai", "value": 94},
             {"title": "Paukščiai", "value": 58},
             {"title": "Induočiai augalai", "value": 10}
-        ],
-        "comments": [""]
+        ]
     },
     {
         "teamName": "Kirkutis",
@@ -282,8 +270,7 @@
             {"title": "Kiti vabzdžiai", "value": 248},
             {"title": "Paukščiai", "value": 264},
             {"title": "Induočiai augalai", "value": 3}
-        ],
-        "comments": [""]
+        ]
     },
     {
         "teamName": "Hayabusa",
@@ -304,8 +291,7 @@
             {"title": "Kiti vabzdžiai", "value": 193},
             {"title": "Paukščiai", "value": 40},
             {"title": "Induočiai augalai", "value": 12}
-        ],
-        "comments": [""]
+        ]
     },
     {
         "teamName": "Mikro makro",
@@ -326,7 +312,6 @@
             {"title": "Kiti vabzdžiai", "value": 75},
             {"title": "Paukščiai", "value": 31},
             {"title": "Induočiai augalai", "value": 17}
-        ],
-        "comments": [""]
+        ]
     }
 ]
