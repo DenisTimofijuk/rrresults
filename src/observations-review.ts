@@ -4,10 +4,11 @@ import './styles/loader.css';
 import './styles/collapse.css';
 import './styles/observation-table.css';
 import { displayAlert, hideAlert } from './utils/errorHandler';
-import { getURLParameter, updateURLParameter } from './utils/URLParametersHandler';
+import { urlParameters } from './utils/URLParametersHandler';
 import { getAvailableCategories } from './utils/getAvailableCategories';
 import { displayDataForExpert } from './utils/displayDataForExpert';
 import { observationStatusChangedHandler } from './utils/observationStatusChangedHandler';
+import { initiateDisplayOnlyCommentsFilter } from './utils/initiateDisplayOnlyCommentsFilter';
 
 // For now, we will ignore the authentication problem and continue with the scenario as if the users were authorized.
 
@@ -17,8 +18,12 @@ import { observationStatusChangedHandler } from './utils/observationStatusChange
     const categorySelect = document.getElementById('category-selected') as HTMLSelectElement;
     const resultPlaceHolder = document.getElementById('results') as HTMLDivElement;
     const categoryPlaceHolder = document.getElementById('category-place-holder') as HTMLSpanElement;
+    
+    initiateDisplayOnlyCommentsFilter(); //TODO: refactor, needed, since now it filter only per page. It should filter per entire dataset.
+    
+    document.addEventListener('observationStatusChanged', observationStatusChangedHandler);
 
-    let selectedCategory = getURLParameter('category');
+    let selectedCategory = urlParameters.get('category');
 
     try {
         loader?.classList.remove('hide');
@@ -45,7 +50,7 @@ import { observationStatusChangedHandler } from './utils/observationStatusChange
         try {
             loader?.classList.remove('hide');
             await displayDataForExpert(resultPlaceHolder, categorySelect.value);
-            updateURLParameter('category', categorySelect.value);
+            urlParameters.update('category', categorySelect.value);
         } catch (error) {
             displayAlert()
         }finally{
@@ -74,6 +79,6 @@ import { observationStatusChangedHandler } from './utils/observationStatusChange
         resultPlaceHolder.innerHTML = '';
         const onlyWithCommentsInput = document.getElementById('only-with-comments') as HTMLInputElement;
         onlyWithCommentsInput.checked = false;
-        document.removeEventListener('observationStatusChanged', observationStatusChangedHandler);
+        onlyWithCommentsInput.disabled = true;
     }
 })();

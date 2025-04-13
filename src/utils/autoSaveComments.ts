@@ -90,8 +90,8 @@ export function initCommentsAutoSave(table: HTMLTableElement, dataManager: Exper
     });
 
     // Save any pending changes before page unload
-    window.addEventListener('beforeunload', (e) => {
-        e.preventDefault();
+    window.addEventListener('beforeunload', () => {
+        // e.preventDefault();
         Object.keys(pendingSaves).forEach(id => {
             if (Object.keys(pendingSaves[id]).length > 0) {
                 dataManager.postComment(Number(id), pendingSaves[id].comment);

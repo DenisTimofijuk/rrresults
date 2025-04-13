@@ -1,4 +1,5 @@
-import { ObservationStatus, ObservationStatusChangeEventDetails } from "../types/ExpertDataManager.type";
+import { ObservationStatusChanged } from "../types/customEvents.type";
+import { ObservationStatus } from "../types/ExpertDataManager.type";
 import { ExperResultData } from "../types/ExpertTableData.type";
 import apiManager from "./apisManager";
 
@@ -9,16 +10,46 @@ export default class ExpertDataManager {
     dataset: Map<number, ExperResultData> = new Map();
     private pendingRequests: Map<number, Promise<any>> = new Map();
     private observationStatus: Map<number, ObservationStatus> = new Map();
-    private maxRetries = 2;
-    private retryDelay = 500; // ms
+    private readonly maxRetries = 2;
+    private readonly retryDelay = 500; // ms
+    readonly rowsPerPage = 20;
+    private page: number = 1;
 
-    constructor(data: ExperResultData[]) {
-        data.forEach((row) => {
-            this.dataset.set(row.taxon_id, row);
-            row.observations.forEach(obs => {
+    constructor(private data: ExperResultData[]) {
+        this.setDataset();
+    }
+
+    setDataset() {
+        const startIdx = (this.currentPage - 1) * this.rowsPerPage;
+        const endIdx = Math.min(startIdx + this.rowsPerPage, this.data.length);
+
+        for (let i = startIdx; i < endIdx; i++) {
+            this.dataset.set(this.data[i].taxon_id, this.data[i]);
+            this.data[i].observations.forEach(obs => {
                 this.observationStatus.set(obs.id, ObservationStatus.idle);
             });
-        });
+        };
+    }
+
+    set currentPage(page: number) {
+        if (page < 1) {
+            this.page = 1;
+        } else if (page > this.getTotalPages()) {
+            this.page = this.getTotalPages();
+        } else {
+            this.page = page;
+        }
+
+        this.dataset.clear(); // Clear the current dataset
+        this.setDataset(); // Re-populate the dataset for the new page
+    }
+
+    get currentPage() {
+        return this.page;
+    }
+
+    getTotalPages() {
+        return Math.ceil(this.data.length / this.rowsPerPage);
     }
 
     getObservationStatus(observationId: number) {
@@ -110,7 +141,7 @@ export default class ExpertDataManager {
 
     postComment(taxonID: number, comment?: string): void {
         if (!this.getRowData(taxonID) || comment === undefined) return;
-        
+
         this.getRowData(taxonID)!.expert_review = comment;
         this._setStatus(taxonID, ObservationStatus.pending);
 
@@ -133,8 +164,8 @@ export default class ExpertDataManager {
      */
     private _processApiRequest<T>(
         apiCall: ApiCallFunction<T>,
-        payload: T, 
-        requestId: number, 
+        payload: T,
+        requestId: number,
         affectedIds: number[]
     ): void {
         // Register the request as pending
@@ -171,8 +202,8 @@ export default class ExpertDataManager {
      * @returns Promise resolving to success status
      */
     private async _executeWithRetry<T>(
-        apiCall: ApiCallFunction<T>, 
-        payload: T, 
+        apiCall: ApiCallFunction<T>,
+        payload: T,
         retries: number
     ): Promise<boolean> {
         for (let attempt = 0; attempt <= retries; attempt++) {
@@ -184,7 +215,7 @@ export default class ExpertDataManager {
                 console.warn(`Attempt ${attempt + 1} threw error:`, err);
                 if (attempt === retries) throw err; // Re-throw on final attempt
             }
-            
+
             if (attempt < retries) {
                 await this._delay(this.retryDelay);
             }
@@ -202,9 +233,15 @@ export default class ExpertDataManager {
     }
 
     private _emitStatusUpdate(id: number, status: ObservationStatus): void {
-        const event = new CustomEvent('observationStatusChanged', {
-            detail: { id, status } as ObservationStatusChangeEventDetails
+        const event = new CustomEvent<ObservationStatusChanged>('observationStatusChanged', {
+            detail: { id, status }
         });
         document.dispatchEvent(event);
     }
 }
+
+// TODO:on page load generate table if page param is present in the URL
+// set current visible page - active
+// fix filters - only with comments
+// fix table column width - fixed values
+// change pagination color design

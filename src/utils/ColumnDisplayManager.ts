@@ -1,5 +1,5 @@
 import { DataRow, ResultData } from "../types/Rezults.type";
-import { updateURLParameter } from "./URLParametersHandler";
+import { urlParameters } from "./URLParametersHandler";
 
 /**
  * Class to manage table column display and animations
@@ -177,7 +177,7 @@ export default class ColumnDisplayManager {
     this.currentColumnIndex++;
     this.isAnimating = false;
     this.updateProgressDisplay();
-    updateURLParameter('column', this.currentColumnIndex.toString());
+    urlParameters.update('column', this.currentColumnIndex.toString());
 
     return true;
   }

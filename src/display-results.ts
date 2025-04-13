@@ -6,8 +6,7 @@ import { ResultData } from './types/Rezults.type';
 import apiManager from './utils/apisManager';
 import ColumnDisplayManager from './utils/ColumnDisplayManager';
 import { displayAlert, hideAlert } from './utils/errorHandler';
-// import { resetProgress, revealNextColumnAnimated, revielCurrentColumns } from './utils/revealNextColumn';
-import { getURLParameter, updateURLParameter } from './utils/URLParametersHandler';
+import { urlParameters } from './utils/URLParametersHandler';
 
 (async () => {
     const loader = document.getElementById('loader-wrapper') as HTMLDivElement;
@@ -17,8 +16,8 @@ import { getURLParameter, updateURLParameter } from './utils/URLParametersHandle
     const placeHolder = document.getElementById('results') as HTMLDivElement;
     const yearPlaceHolder = document.getElementById('year-place-holder') as HTMLSpanElement;
 
-    const allreadyRevieledColumns = getURLParameter('column');
-    const allreadyRevieledYear = getURLParameter('year');
+    const allreadyRevieledColumns = urlParameters.get('column');
+    const allreadyRevieledYear = urlParameters.get('year');
 
     try {
         loader.classList.remove('hide');
@@ -69,7 +68,7 @@ import { getURLParameter, updateURLParameter } from './utils/URLParametersHandle
         const selectedValue = yearSelect.value;
         if (!selectedValue) return;
 
-        updateURLParameter('year', yearSelect.value);
+        urlParameters.update('year', yearSelect.value);
         hideAlert();
 
         yearPlaceHolder.textContent = yearSelect.value;

@@ -1,8 +1,8 @@
-import { ObservationStatusChangeEventDetails } from "../types/ExpertDataManager.type";
+import { ObservationStatusChanged } from "../types/customEvents.type";
 
-export function observationStatusChangedHandler(event: Event) {
+export function observationStatusChangedHandler(event: Event) {    
     const customEvent = event as CustomEvent;
-    const details = customEvent.detail as ObservationStatusChangeEventDetails;
+    const details: ObservationStatusChanged = customEvent.detail ;
 
     const statusWrapper = document.querySelector(`div#status-wrapper-${details.id}`);
 
