@@ -1,8 +1,6 @@
 import { PageChanged } from "../types/customEvents.type";
 
-export function generatePagination(totalPages: number, startingPage: string) {
-    // TODO: handle large number of pages
-    
+export function generatePagination(totalPages: number, startingPage: string) {    
     let currentPage = parseInt(startingPage, 10);
     const paginationItems:HTMLLIElement[] = [];
 

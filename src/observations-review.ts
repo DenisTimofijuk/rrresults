@@ -19,7 +19,7 @@ import { initiateDisplayOnlyCommentsFilter } from './utils/initiateDisplayOnlyCo
     const resultPlaceHolder = document.getElementById('results') as HTMLDivElement;
     const categoryPlaceHolder = document.getElementById('category-place-holder') as HTMLSpanElement;
     
-    initiateDisplayOnlyCommentsFilter(); //TODO: refactor, needed, since now it filter only per page. It should filter per entire dataset.
+    initiateDisplayOnlyCommentsFilter();
     
     document.addEventListener('observationStatusChanged', observationStatusChangedHandler);
 

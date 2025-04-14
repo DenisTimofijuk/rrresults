@@ -59,7 +59,6 @@ import { urlParameters } from './utils/URLParametersHandler';
 
     revealNextButton.addEventListener('click', () => {
         if (currentData && currentTable) {
-            // revealNextColumnAnimated(currentData, currentTable);
             columnManager.revealNextColumnAnimated();
         }
     });
