@@ -8,7 +8,6 @@ import { urlParameters } from './utils/URLParametersHandler';
 import { getAvailableCategories } from './utils/getAvailableCategories';
 import { displayDataForExpert } from './utils/displayDataForExpert';
 import { observationStatusChangedHandler } from './utils/observationStatusChangedHandler';
-import { initiateDisplayOnlyCommentsFilter } from './utils/initiateDisplayOnlyCommentsFilter';
 
 // For now, we will ignore the authentication problem and continue with the scenario as if the users were authorized.
 
@@ -18,9 +17,7 @@ import { initiateDisplayOnlyCommentsFilter } from './utils/initiateDisplayOnlyCo
     const categorySelect = document.getElementById('category-selected') as HTMLSelectElement;
     const resultPlaceHolder = document.getElementById('results') as HTMLDivElement;
     const categoryPlaceHolder = document.getElementById('category-place-holder') as HTMLSpanElement;
-    
-    initiateDisplayOnlyCommentsFilter();
-    
+        
     document.addEventListener('observationStatusChanged', observationStatusChangedHandler);
 
     let selectedCategory = urlParameters.get('category');

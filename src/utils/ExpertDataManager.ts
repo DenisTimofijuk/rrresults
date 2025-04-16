@@ -2,6 +2,7 @@ import { ObservationStatusChanged } from "../types/customEvents.type";
 import { ObservationStatus } from "../types/ExpertDataManager.type";
 import { ExperResultData } from "../types/ExpertTableData.type";
 import apiManager from "./apisManager";
+import { urlParameters } from "./URLParametersHandler";
 
 // Define API call type to make the code more generic
 type ApiCallFunction<T> = (payload: T) => Promise<{ status: number, message?: string }>;
@@ -15,15 +16,10 @@ export default class ExpertDataManager {
     private rowsPerPage = 20;
     private page: number = 1;
 
-    constructor(private data: ExperResultData[]) {
-        this.setDataset();
-    }
+    constructor(private data: ExperResultData[]) {}
 
     set itemsPerPage(rows: number) {
         this.rowsPerPage = rows;
-        
-        this.dataset.clear(); // Clear the current dataset
-        this.setDataset(); // Re-populate the dataset with the new rows per page
     }
 
     get itemsPerPage() {
@@ -31,6 +27,8 @@ export default class ExpertDataManager {
     }
 
     setDataset() {
+        this.dataset.clear();
+
         const startIdx = (this.currentPage - 1) * this.rowsPerPage;
         const endIdx = Math.min(startIdx + this.rowsPerPage, this.data.length);
 
@@ -50,9 +48,6 @@ export default class ExpertDataManager {
         } else {
             this.page = page;
         }
-
-        this.dataset.clear(); // Clear the current dataset
-        this.setDataset(); // Re-populate the dataset for the new page
     }
 
     get currentPage() {
@@ -98,7 +93,6 @@ export default class ExpertDataManager {
             return;
         }
 
-        // Avoid duplicate requests
         if (this.pendingRequests.has(observationId)) {
             console.warn(`Request already in progress for observation ${observationId}`);
             return;
@@ -127,13 +121,11 @@ export default class ExpertDataManager {
         const observations = row.observations;
         if (observations.length === 0) return;
 
-        // Avoid duplicate submissions for this group
         if (this.pendingRequests.has(taxonId)) {
             console.warn(`Request already in progress for group ${taxonId}`);
             return;
         }
 
-        // Prepare payload and update local data
         const payload = observations.map(obs => {
             obs.points = points;
             this._setStatus(obs.id, ObservationStatus.pending);
@@ -166,52 +158,32 @@ export default class ExpertDataManager {
         );
     }
 
-    /**
-     * Generic method to process API requests with retry logic
-     * @param apiCall The API function to call
-     * @param payload The payload to send
-     * @param requestId Unique identifier for the request
-     * @param affectedIds IDs that should be updated with status changes
-     */
     private _processApiRequest<T>(
         apiCall: ApiCallFunction<T>,
         payload: T,
         requestId: number,
         affectedIds: number[]
     ): void {
-        // Register the request as pending
         const promise = this._executeWithRetry(apiCall, payload, this.maxRetries)
             .then(success => {
                 const newStatus = success ? ObservationStatus.success : ObservationStatus.error;
-                // Update status for all affected IDs
                 affectedIds.forEach(id => this._setStatus(id, newStatus));
-                // Also update the main request ID status
                 this._setStatus(requestId, newStatus);
                 return success;
             })
             .catch(err => {
                 console.error(`Final failure for request ${requestId}:`, err);
-                // Update status for all affected IDs to error
                 affectedIds.forEach(id => this._setStatus(id, ObservationStatus.error));
-                // Also update the main request ID status
                 this._setStatus(requestId, ObservationStatus.error);
                 throw err;
             })
             .finally(() => {
-                // Clean up the pending request
                 this.pendingRequests.delete(requestId);
             });
 
         this.pendingRequests.set(requestId, promise);
     }
 
-    /**
-     * Generic retry mechanism for API calls
-     * @param apiCall The API function to call
-     * @param payload The payload to send
-     * @param retries Number of retries allowed
-     * @returns Promise resolving to success status
-     */
     private async _executeWithRetry<T>(
         apiCall: ApiCallFunction<T>,
         payload: T,
@@ -248,5 +220,46 @@ export default class ExpertDataManager {
             detail: { id, status }
         });
         document.dispatchEvent(event);
+    }
+
+    initiateDisplayOnlyCommentsFilter(regenerateTable: (hidePagination: boolean) => void) {
+        const originalButton = document.getElementById('only-with-comments') as HTMLInputElement;
+        const clonedButton = originalButton.cloneNode() as HTMLInputElement;
+        const parent = originalButton.parentElement as HTMLDivElement;
+        parent.removeChild(originalButton);
+        parent.appendChild(clonedButton);
+
+        clonedButton.addEventListener('change', (e) => {            
+            const button = e.target as HTMLInputElement;
+            if (button.checked) {
+                // reset all indexes
+                this.itemsPerPage = this.dataset.size;
+                this.currentPage = 1;
+                this._setDatasetOnlyWithComments();
+            } else {
+                // restore all indexes from url parameters
+                const itemsPerPage = urlParameters.get('items-per-page');
+                const currentPage = urlParameters.get('page');
+                this.itemsPerPage = itemsPerPage ? parseInt(itemsPerPage, 10) : 20;
+                this.currentPage = currentPage ? parseInt(currentPage, 10) : 1;
+                this.rowsPerPage = this.itemsPerPage; // Set the rows per page to the one from URL parameters
+                this.setDataset(); // Reset to original dataset
+            }
+
+            regenerateTable(button.checked); // Regenerate the table with the filtered dataset
+        });
+    }
+
+    private _setDatasetOnlyWithComments() {
+        const data = this.data.filter(item => item.expert_review !== '');
+        this.dataset.clear();
+        this.observationStatus.clear(); // Clear previous observation statuses
+
+        data.forEach(item => {
+            this.dataset.set(item.taxon_id, item);
+            item.observations.forEach(obs => {
+                this.observationStatus.set(obs.id, ObservationStatus.idle);
+            });
+        });
     }
 }

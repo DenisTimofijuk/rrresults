@@ -52,8 +52,10 @@ export function createTableForObservations(data: ObservationData[], observationC
             if (observationKey === "url" && data) {
                 const link = document.createElement('a');
                 link.href = value as string;
-                link.textContent = 'iNaturalist';
+                link.innerHTML = `iNaturalist <i class="bi bi-box-arrow-up-right"></i>`;
                 link.target = '_blank';
+                link.className = "link-success link-opacity-65 link-opacity-100-hover";
+                link.setAttribute('aria-label', `iNaturalist ${observation['id']}`);
                 td.appendChild(link);
             } else if (observationKey === "points") {
                 const radioContainer = createValidationComponent([0, 0.5, 1], observation['id'].toString(), observationValue as number);

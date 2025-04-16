@@ -44,7 +44,7 @@ export function generateTableForExpert(dataManager: ExpertDataManager) {
         tbody.appendChild(headerRow);
         // Add extra collumn for rows indexing:
         const indexCol = document.createElement('td');
-        indexCol.textContent = `${(dataManager.currentPage - 1) * dataManager.rowsPerPage + rowNumber}`;
+        indexCol.textContent = `${(dataManager.currentPage - 1) * dataManager.itemsPerPage + rowNumber}`;
         headerRow.appendChild(indexCol);
 
         // Add extra column for status indication:
