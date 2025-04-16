@@ -11,5 +11,5 @@ export type ExperResultData = {
     name: string;
     preferred_common_name: string;
     expert_review: string;
-    observations: ObservationData[]
+    observations: ObservationData[];
 }

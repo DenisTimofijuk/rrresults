@@ -1,7 +1,7 @@
 export function getHeaderName(key: string) {
     return {
         name: 'Mokslinis Pavadinimas',
-        preferred_common_name: 'Įpratas Pavadinimas',
+        preferred_common_name: 'Lietuviškas pavadinimas',
         expert_review: 'Vertinimas',
         observations: 'Stebėjimai',
         points: 'Taškai',

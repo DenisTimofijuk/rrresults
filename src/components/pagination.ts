@@ -13,7 +13,7 @@ export function generatePagination(totalPages: number, startingPage: string) {
             return
         }
         handleActivePageIndicaton(pagination, paginationItems[currentPage - 1]);
-        fireChangeEvent(currentPage);
+        fireChangeEvent(pagination, currentPage);
     }, '', '<span aria-hidden="true">&laquo;</span>');
     pagination.appendChild(previous);
 
@@ -25,7 +25,7 @@ export function generatePagination(totalPages: number, startingPage: string) {
             }
             currentPage = value;
             handleActivePageIndicaton(pagination, li);
-            fireChangeEvent(value);
+            fireChangeEvent(pagination, value);
         }, `${value}`);
         pagination.appendChild(li);
 
@@ -42,7 +42,7 @@ export function generatePagination(totalPages: number, startingPage: string) {
             return;
         }
         handleActivePageIndicaton(pagination, paginationItems[currentPage - 1]);
-        fireChangeEvent(currentPage);
+        fireChangeEvent(pagination, currentPage);
 
     }, '', '<span aria-hidden="true">&raquo;</span>');
     pagination.appendChild(next);
@@ -77,7 +77,7 @@ function handleActivePageIndicaton(pagination: HTMLUListElement, element: HTMLLI
     element.classList.add('active');
 }
 
-function fireChangeEvent(value: number) {
+function fireChangeEvent(pagination: HTMLElement, value: number) {
     const event = new CustomEvent<PageChanged>('pageChanged', { detail: { page: value } });
-    document.dispatchEvent(event);
+    pagination.dispatchEvent(event);
 }

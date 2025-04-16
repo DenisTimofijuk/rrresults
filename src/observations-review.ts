@@ -51,7 +51,7 @@ import { initiateDisplayOnlyCommentsFilter } from './utils/initiateDisplayOnlyCo
             loader?.classList.remove('hide');
             urlParameters.update('category', categorySelect.value);   
                  
-            await displayDataForExpert(resultPlaceHolder, categorySelect.value);    
+            await displayDataForExpert(categorySelect.value);    
         } catch (error) {
             displayAlert()
         }finally{
@@ -65,7 +65,7 @@ import { initiateDisplayOnlyCommentsFilter } from './utils/initiateDisplayOnlyCo
             categorySelect.value = selectedCategory;
             categoryPlaceHolder.textContent = categorySelect.options[categorySelect.selectedIndex].text;
             getDataButton.disabled = false;
-            displayDataForExpert(resultPlaceHolder, categorySelect.value);
+            displayDataForExpert(categorySelect.value);
         } catch (error) {
             displayAlert()
         } finally {

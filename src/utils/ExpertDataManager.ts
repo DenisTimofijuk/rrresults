@@ -12,11 +12,22 @@ export default class ExpertDataManager {
     private observationStatus: Map<number, ObservationStatus> = new Map();
     private readonly maxRetries = 2;
     private readonly retryDelay = 500; // ms
-    readonly rowsPerPage = 20;
+    private rowsPerPage = 20;
     private page: number = 1;
 
     constructor(private data: ExperResultData[]) {
         this.setDataset();
+    }
+
+    set itemsPerPage(rows: number) {
+        this.rowsPerPage = rows;
+        
+        this.dataset.clear(); // Clear the current dataset
+        this.setDataset(); // Re-populate the dataset with the new rows per page
+    }
+
+    get itemsPerPage() {
+        return this.rowsPerPage;
     }
 
     setDataset() {

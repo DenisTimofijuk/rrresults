@@ -94,7 +94,4 @@ import { urlParameters } from './utils/URLParametersHandler';
             displayAlert();
         }
     }
-
-    // const results = await fetchINaturalistObservations();
-    // console.log(results);
 })();
