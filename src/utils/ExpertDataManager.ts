@@ -1,6 +1,6 @@
 import { ObservationStatusChanged } from "../types/customEvents.type";
 import { ObservationStatus } from "../types/ExpertDataManager.type";
-import { ExperResultData } from "../types/ExpertTableData.type";
+import { ExpertResultData } from "../types/ExpertTableData.type";
 import apiManager from "./apisManager";
 import { urlParameters } from "./URLParametersHandler";
 
@@ -8,7 +8,7 @@ import { urlParameters } from "./URLParametersHandler";
 type ApiCallFunction<T> = (payload: T) => Promise<{ status: number, message?: string }>;
 
 export default class ExpertDataManager {
-    dataset: Map<number, ExperResultData> = new Map();
+    dataset: Map<number, ExpertResultData> = new Map();
     private pendingRequests: Map<number, Promise<any>> = new Map();
     private observationStatus: Map<number, ObservationStatus> = new Map();
     private readonly maxRetries = 2;
@@ -16,7 +16,7 @@ export default class ExpertDataManager {
     private rowsPerPage = 20;
     private page: number = 1;
 
-    constructor(private data: ExperResultData[]) {}
+    constructor(private data: ExpertResultData[]) {}
 
     set itemsPerPage(rows: number) {
         this.rowsPerPage = rows;

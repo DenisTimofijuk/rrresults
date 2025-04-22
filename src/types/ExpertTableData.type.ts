@@ -6,7 +6,7 @@ export type ObservationData = {
     url: string;
 }
 
-export type ExperResultData = {
+export type ExpertResultData = {
     taxon_id: number;
     name: string;
     preferred_common_name: string;

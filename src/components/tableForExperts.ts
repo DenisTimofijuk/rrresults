@@ -1,4 +1,4 @@
-import { ExperResultData } from "../types/ExpertTableData.type";
+import { ExpertResultData } from "../types/ExpertTableData.type";
 import { createButtonForCollapse } from './expandButton';
 import { createValidationComponent } from './validationComponent';
 import ExpertDataManager from '../utils/ExpertDataManager';
@@ -56,7 +56,7 @@ export function generateTableForExpert(dataManager: ExpertDataManager) {
         // Process columns in the defined order
         dataManager.getHeaderColumnOrder().forEach((key) => {
             const td = document.createElement('td');
-            const value = rowData[key as keyof ExperResultData];
+            const value = rowData[key as keyof ExpertResultData];
 
             if (key === "observations") {
                 const wrapper = document.createElement('div');

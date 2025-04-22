@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { ExperResultData } from '../../types/ExpertTableData.type';
+import { ExpertResultData } from '../../types/ExpertTableData.type';
 
 const categories = ['Plants', 'Birds', 'Mammals', 'Insects', 'Fungi'];
 const commonNames = {
@@ -57,7 +57,7 @@ function getRandomNumber() {
     return Math.floor(Math.random() * teamNames.length) + 1;
 }
 
-function generateObservation(index: number): ExperResultData {
+function generateObservation(index: number): ExpertResultData {
     const category = getRandomItem(categories);
     const taxon_id = 1000000 + index;
     const totalObservations = getRandomNumber();
