@@ -14,10 +14,3 @@ export const urlParameters = {
         window.history.pushState({}, '', url);
     },
 }
-
-/**
- * I AM LEARNING AND WRITING UNIT TESTS WITH VITEST FOR MY PROJECT.
- * WHAT WOULD BE YOUR RECOMMENDATION FOR THIS CODE? 
- * DO I NED TO WRITE TESTS FOR IT?
- * IF SO, WHAT SHOULD I BE TESTING HERE?
- */

@@ -1,15 +1,17 @@
 import apiManager from "./apisManager";
 import { generateTableForExpert } from "../components/tableForExperts";
 import ExpertDataManager from "./ExpertDataManager";
-import { initCommentsAutoSave } from "./autoSaveComments";
 import { generatePagination } from "../components/pagination";
 import { initSetPointsPerGroup } from "./initSetPointsPerGroup";
 import { PageChanged } from "../types/customEvents.type";
 import { urlParameters } from "./URLParametersHandler";
+import { CommentsAutoSave } from "./CommentsAutoSave";
+
+let currentAutoSave: CommentsAutoSave | null = null;
 
 export async function displayDataForExpert(selectedCategory: string) {
-    const resultPlaceHolder = document.getElementById('results') as HTMLDivElement;
     const itemsPerPageSelect = document.getElementById('items-per-page') as HTMLSelectElement;
+
     try {
         const results = await apiManager.getObservations(selectedCategory);
         const dataManager = new ExpertDataManager(results);
@@ -25,28 +27,20 @@ export async function displayDataForExpert(selectedCategory: string) {
 
         const currentPage = urlParameters.get('page') || '1';
         dataManager.currentPage = parseInt(currentPage, 10);
-        dataManager.setDataset(); // Set the dataset based on the current page
+        dataManager.setDataset();
 
         const pagination = createPagination(dataManager.getTotalPages(), currentPage);
 
-        const table = generateTableForExpert(dataManager);
-        resultPlaceHolder.appendChild(table);
-
+        updateTable(dataManager);
         initSetPointsPerGroup(dataManager);
-        initCommentsAutoSave(table, dataManager);
 
         dataManager.initiateDisplayOnlyCommentsFilter((hidePagination) => {
-            // Regenerate the table with the filtered dataset
-            resultPlaceHolder.innerHTML = ''; // Clear previous table
-            const table = generateTableForExpert(dataManager);
-            resultPlaceHolder.appendChild(table);
-
+            updateTable(dataManager);
             initSetPointsPerGroup(dataManager);
-            initCommentsAutoSave(table, dataManager);
 
-            if(hidePagination){
+            if (hidePagination) {
                 document.getElementById('review-pagination-wrapper-bottom')!.classList.add('hide');
-            }else{ 
+            } else {
                 document.getElementById('review-pagination-wrapper-bottom')!.classList.remove('hide');
             }
         })
@@ -54,24 +48,20 @@ export async function displayDataForExpert(selectedCategory: string) {
         document.getElementById('items-per-page')!.addEventListener('change', (event) => {
             const itemsPerPage = (event.target as HTMLInputElement).value;
 
-            dataManager.currentPage = 1; // Reset to first page
+            dataManager.currentPage = 1;
             dataManager.itemsPerPage = parseInt(itemsPerPage, 10);
             dataManager.setDataset()
 
             urlParameters.update('page', '1');
             urlParameters.update('items-per-page', itemsPerPage);
 
-            resultPlaceHolder.innerHTML = ''; // Clear previous table
-            const newTable = generateTableForExpert(dataManager);
-            resultPlaceHolder.appendChild(newTable);
+            updateTable(dataManager);
+            initSetPointsPerGroup(dataManager);
 
             const newPagination = createPagination(dataManager.getTotalPages(), '1');
             newPagination.addEventListener('pageChanged', (event) => {
                 pageChangeHandler(event, dataManager);
             });
-
-            initSetPointsPerGroup(dataManager);
-            initCommentsAutoSave(newTable, dataManager);
         })
 
         pagination.addEventListener('pageChanged', (event) => {
@@ -88,7 +78,7 @@ export async function displayDataForExpert(selectedCategory: string) {
 
 function createPagination(totalPages: number, currentPage: string) {
     const paginationWrapper = document.getElementById('review-pagination-wrapper-bottom') as HTMLDivElement;
-    paginationWrapper.innerHTML = ''; // Clear previous pagination
+    paginationWrapper.innerHTML = '';
     const pagination = generatePagination(totalPages, currentPage);
     paginationWrapper.appendChild(pagination);
 
@@ -96,20 +86,31 @@ function createPagination(totalPages: number, currentPage: string) {
 }
 
 function pageChangeHandler(event: Event, dataManager: ExpertDataManager) {
-    const resultPlaceHolder = document.getElementById('results') as HTMLDivElement;
-
     const page = (event as CustomEvent<PageChanged>).detail.page;
     dataManager.currentPage = page;
     urlParameters.update('page', page.toString());
-    dataManager.setDataset(); // Update the dataset based on the current page
+    dataManager.setDataset();
 
-    resultPlaceHolder.innerHTML = ''; // Clear previous table
-    const table = generateTableForExpert(dataManager);
-    resultPlaceHolder.appendChild(table);
-
+    updateTable(dataManager);
     initSetPointsPerGroup(dataManager);
-    initCommentsAutoSave(table, dataManager);
 
-    // scroll page to top
     window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function updateTable(dataManager: ExpertDataManager) {
+    if (currentAutoSave) {
+        currentAutoSave.destroy();
+        currentAutoSave = null;
+    }
+
+    const newTable = generateTableForExpert(dataManager);
+    const container = document.getElementById('results') as HTMLDivElement;
+    container.innerHTML = '';
+    container.appendChild(newTable);
+
+    currentAutoSave = new CommentsAutoSave({
+        onSaveComment: async (taxonId, comment) => dataManager.postComment(taxonId, comment)
+    });
+
+    currentAutoSave.init(newTable);
 }
