@@ -55,7 +55,9 @@ export default class ColumnDisplayManager {
   private addColumnHeader(columnIndex: number): void {
     const newHeader = document.createElement('th');
     newHeader.textContent = this.results![0].data[columnIndex].title;
-    this.table!.tHead!.rows.item(0)!.appendChild(newHeader);
+    
+    const headRow = this.table!.tHead!.querySelector('tr');
+    headRow!.appendChild(newHeader);
   }
 
   /**
