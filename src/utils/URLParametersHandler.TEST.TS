@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach } from 'vitest'
 import { urlParameters } from './URLParametersHandler'
 
 describe('urlParameters', () => {
-  const baseUrl = 'http://localhost/'
+  const baseUrl = 'http://localhost:3000/'
 
   beforeEach(() => {
     // Reset URL before each test
