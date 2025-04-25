@@ -1,6 +1,3 @@
-import ExpertDataManager from "./ExpertDataManager";
-
-// CommentsAutoSave.ts
 export class CommentsAutoSave {
     private saveTimers: { [key: string]: number } = {};
     private currentTaxonId: number | null = null;
@@ -175,14 +172,4 @@ export class CommentsAutoSave {
         element.addEventListener(type, handler);
         this.eventListeners.push({ element, type, handler });
     }
-}
-
-// Export a factory function for backward compatibility and easy usage
-export function initCommentsAutoSave(table: HTMLTableElement, dataManager: ExpertDataManager): CommentsAutoSave {
-    const autoSave = new CommentsAutoSave({
-        onSaveComment: async (taxonId, comment) => dataManager.postComment(taxonId, comment)
-    });
-
-    autoSave.init(table);
-    return autoSave;
 }
